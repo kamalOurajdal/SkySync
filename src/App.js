@@ -1,5 +1,5 @@
 import "./App.css";
-import RMenu from "./components/RMenu";
+import LeftMenu from "./components/LeftMenu";
 import weather_bg from "./media/backgound/weather_bg.jpg";
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
@@ -15,7 +15,7 @@ function App() {
     >
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<RMenu />}>
+          <Route path="/" element={<LeftMenu />}>
             <Route index element={<Weather />} />
             <Route path="Map" element={<WeatherMap />} />
             <Route path="Settings" element={<Settings/>}/>
