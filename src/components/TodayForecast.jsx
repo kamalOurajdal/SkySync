@@ -14,6 +14,10 @@ function TodayForecast() {
 
 const data = []
 const timeW = []
+timeSlots.map(( {temp, time}) => {
+  data.push(temp)
+  timeW.push(time)
+})
   return (
     <div className="bg-white bg-opacity-50 rounded-xl mt-5 p-4 w-full">
       <p className="font-bold uppercase text-xs text-gray-400 mb-5 flex flex-col">
@@ -25,18 +29,17 @@ const timeW = []
           
           <div
             key={time}
-            className={`font-bold flex flex-col items-center w-full h-24 justify-between ${index !== 0 ? "border-gray-300 border-l-2" : ""}`}
+            className={`font-bold flex flex-col items-center w-full h-24 justify-between `}
           >
-            {data.push(temp)}
-            {timeW.push(time)}
+            
             <p className="text-sm">{time}</p>
             {icon}
-            <p className="text-sm font-bold">{temp}C°</p>
+            <p className="text-sm font-bold">{temp}°</p>
           </div>
         ))}
         
       </div>
-      <LineChart data={{data:data, time:timeW}}/>
+      <LineChart data={{data:data, time: timeW}}/>
     </div>
   );
 }
