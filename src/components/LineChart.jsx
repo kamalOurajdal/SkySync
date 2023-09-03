@@ -41,8 +41,8 @@ const LineChart = ({data}) => {
   };
 
   return (
-    <div className="  px-10 pt-2">
-      <Line data={dataChart} options={options} height={30} />
+    <div className=" pt-6">
+      <Line data={dataChart} options={options}   height={20}/>
     </div>
   );
 };

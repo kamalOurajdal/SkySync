@@ -1,4 +1,4 @@
-
+import { DateTime } from "luxon";
 
 // API key and base URL for OpenWeatherMap API
 const WEATHER_API = "f1cff3f042bece694e866a30de2127bf";
@@ -24,6 +24,7 @@ const formatCurrentWeather = (data) => {
     sys: { country, sunrise, sunset },
     weather,
     wind: { speed },
+    timezone
   } = data;
 
   const { main, icon } = weather[0];
@@ -44,6 +45,7 @@ const formatCurrentWeather = (data) => {
     main,
     icon,
     speed,
+    timezone,
   };
   // return the formated data
   return { currentWeather: CurrentWeather };
@@ -170,9 +172,15 @@ const getFormattedWeatherData = async (searchParams) => {
   }
 };
 
+const formatToLocalTime = (
+  secs,
+  zone,
+  format,
+) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
+
 
 
 export default getFormattedWeatherData;
 
-export { getWeatherData };
+export { getWeatherData, formatToLocalTime };
 

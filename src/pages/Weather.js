@@ -5,7 +5,7 @@ import TodayForecast from "../components/TodayForecast";
 import TodayWeatherDetails from "../components/TodayWeatherDetails";
 import WeatherWidget from "../components/WeatherWidget";
 import FiveDayForcast from "../components/FiveDayForecast";
-import getFormattedWeatherData from './../services/WeatherServices';
+import getFormattedWeatherData from "./../services/WeatherServices";
 
 function Weather() {
   const [weather, setWeather] = useState({});
@@ -36,15 +36,19 @@ function Weather() {
   return (
     <div className="flex w-full ">
       <div className="pr-2 ml-2 w-2/3 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200  ">
-          <SearchBar
-            onSearchChange={handleSearchChange}
-            CurrentLocation={handleLocation}
-          />
-          <TodayBriefWeather currentWeather = {weather.currentWeather}/>
-          <TodayForecast />
-          <TodayWeatherDetails />
-        
-      </div><FiveDayForcast />
+        <SearchBar
+          onSearchChange={handleSearchChange}
+          CurrentLocation={handleLocation}
+        />
+        {weather.currentWeather && (
+          <>
+            <TodayBriefWeather currentWeather={weather.currentWeather} />
+            <TodayForecast todayForecast={weather.todayForecast}/>
+            <TodayWeatherDetails currentWeather = {weather.currentWeather}/>
+          </>
+        )}
+      </div>
+      <FiveDayForcast />
     </div>
   );
 }

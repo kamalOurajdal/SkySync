@@ -25,14 +25,12 @@ function TodayBriefWeather( {currentWeather} ) {
 
       <div className='mt-5'>
         <p className='font-bold text-3xl flex items-center'>{name}, {country} <UilMapMarker size={35} className="ml-5"/></p>
-        <p className='text-gray-400 text-sm'>{main}: {temp_max}/{temp_min}</p>
-        <p className='font-bold text-5xl mt-9' > {feels_like}°</p>
+        <p className='text-gray-400 text-sm'>{main}: {Math.round(temp_max)}/{Math.round(temp_min)}</p>
+        <p className='font-bold text-5xl mt-9' > {Math.round(feels_like)}°</p>
       </div>
       <img
-        className='w-32 h-32 mr-10'
-        // className='mr-10 bg-transparent p-0 h-40'
+        className='w-40 mr-10'
         src={`http://openweathermap.org/img/wn/${icon}@4x.png`}
-        // src={cloudy}
       />
     </div>
   )
