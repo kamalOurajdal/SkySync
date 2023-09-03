@@ -16,6 +16,7 @@ function TodayWeatherDetails({ currentWeather }) {
     temp_min,
     temp_max,
     humidity,
+    pressure,
     name,
     dt,
     country,
@@ -38,11 +39,11 @@ function TodayWeatherDetails({ currentWeather }) {
   return (
     <div className=" mt-4 flex justify-between  h-60">
       <div className=" flex flex-col justify-between">
-        <WeatherWidget info={{title:"humidity", data: humidity, icon:humidity_icon}} />
-        <WeatherWidget info={{title:"wind", data: speed, icon:wind_icon}} />
+        <WeatherWidget info={{title:"humidity",unit: "%", data: humidity, icon:humidity_icon}} />
+        <WeatherWidget info={{title:"wind",unit: "m/s", data: speed, icon:wind_icon}} />
       </div>
       <div className=" flex flex-col justify-between ">
-        <WeatherWidget info={{title:"pressure", data: humidity, icon:pressure_icon}} />
+        <WeatherWidget info={{title:"pressure",unit: "hPa", data: pressure, icon:pressure_icon}} />
         <WeatherWidget info={{title:"sun", data: {sunsetTime, sunriseTime}, sunsetIcon: sunset_icon, sunriseIcon: sunrise_icon}} />
       </div>
     </div>

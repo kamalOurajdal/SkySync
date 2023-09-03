@@ -8,19 +8,19 @@ function WeatherWidget({ info }) {
         <div className="flex flex-col  items-center">
           <img src={info.icon} alt="" className="w-10" />
           <h1 className="font-bold">{info.title}</h1>
-          <p>{info.data}</p>
+          <p className="font-bold text-lg text-gray-600">{info.data} {info.unit}</p>
         </div>
       ) : (
         <div className="flex justify-around w-full ">
           <div className="flex flex-col  items-center">
             <img src={info.sunriseIcon} alt="" className="w-14" />
             <h1 className="font-bold">Sunrise</h1>
-            <p>{info.data.sunriseTime}</p>
+            <p className="font-bold text-lg text-gray-600">{info.data.sunriseTime} </p>
           </div>
           <div className="flex flex-col  items-center">
             <img src={info.sunsetIcon} alt="" className="w-14" />
             <h1 className="font-bold">Sunset</h1>
-            <p>{info.data.sunsetTime}</p>
+            <p className="font-bold text-lg text-gray-600">{info.data.sunsetTime}</p>
           </div>
         </div>
       )}

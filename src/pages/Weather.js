@@ -30,16 +30,19 @@ function Weather() {
     };
 
     fetchWeather();
+    setLocation(null)
   }, [SearchValue, location]);
-  console.log("current: " + JSON.stringify(weather.currentWeather, null, 2));
+  console.log("forecast: " + JSON.stringify(weather.dailyForecast, null, 2));
 
   return (
     <div className="flex w-full ">
-      <div className="pr-2 ml-2 w-2/3 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200  ">
+      <div className="flex flex-col  ml-2 w-100">
         <SearchBar
           onSearchChange={handleSearchChange}
           CurrentLocation={handleLocation}
         />
+      <div className="pr-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200  ">
+        
         {weather.currentWeather && (
           <>
             <TodayBriefWeather currentWeather={weather.currentWeather} />
@@ -48,7 +51,9 @@ function Weather() {
           </>
         )}
       </div>
-      <FiveDayForcast />
+      </div>
+      
+      <FiveDayForcast dailyForecast={weather.dailyForecast}/>
     </div>
   );
 }

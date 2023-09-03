@@ -18,16 +18,17 @@ const formatCurrentWeather = (data) => {
     // Extract relevant data from the API response
   const {
     coord: { lat, lon },
-    main: { temp, feels_like, temp_min, temp_max, humidity },
+    main: { temp, feels_like, temp_min, temp_max, humidity, pressure },
     name,
     dt,
     sys: { country, sunrise, sunset },
     weather,
     wind: { speed },
-    timezone
+    timezone,
+    
   } = data;
 
-  const { main, icon } = weather[0];
+  const { main, icon, description } = weather[0];
 
   const CurrentWeather = {
     lat,
@@ -46,6 +47,8 @@ const formatCurrentWeather = (data) => {
     icon,
     speed,
     timezone,
+    pressure,
+    description,
   };
   // return the formated data
   return { currentWeather: CurrentWeather };

@@ -16,6 +16,7 @@ function TodayBriefWeather( {currentWeather} ) {
     main,
     icon,
     speed,
+    description
   } = currentWeather
 
 
@@ -25,7 +26,7 @@ function TodayBriefWeather( {currentWeather} ) {
 
       <div className='mt-5'>
         <p className='font-bold text-3xl flex items-center'>{name}, {country} <UilMapMarker size={35} className="ml-5"/></p>
-        <p className='text-gray-400 text-sm'>{main}: {Math.round(temp_max)}/{Math.round(temp_min)}</p>
+        <p className='text-gray-400 text-sm'>{description}: {Math.round(temp_max)}/{Math.round(temp_min)}</p>
         <p className='font-bold text-5xl mt-9' > {Math.round(feels_like)}°</p>
       </div>
       <img
