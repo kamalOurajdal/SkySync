@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
-import TodayBriefWeather from '../components/TodayBriefWeather'
-import SearchBar from '../components/SearchBar';
-import TodayForecast from '../components/TodayForecast';
-import TodayWeatherDetails from '../components/TodayWeatherDetails';
-import WeatherWidget from '../components/WeatherWidget';
+import React, { useState } from "react";
+import TodayBriefWeather from "../components/TodayBriefWeather";
+import SearchBar from "../components/SearchBar";
+import TodayForecast from "../components/TodayForecast";
+import TodayWeatherDetails from "../components/TodayWeatherDetails";
+import WeatherWidget from "../components/WeatherWidget";
+import FiveDayForcast from "../components/FiveDayForecast";
 
 function Weather() {
   const [weather, setWeather] = useState({});
@@ -20,23 +21,19 @@ function Weather() {
   };
 
   return (
-    <div className='ml-2 w-2/3  flex flex-col overflow-auto scroll-smooth'>
-      <SearchBar
-        onSearchChange={handleSearchChange}
-        CurrentLocation={handleLocation}
-      />
-      <div className=''>
-        <TodayBriefWeather />
-        <TodayForecast/>
-        <TodayWeatherDetails/>
+    <div className="flex w-full">
+      <div className="ml-2 w-2/3 overflow-auto">
+          <SearchBar
+            onSearchChange={handleSearchChange}
+            CurrentLocation={handleLocation}
+          />
+          <TodayBriefWeather />
+          <TodayForecast />
+          <TodayWeatherDetails />
         
-
-
-      </div>
-      
+      </div><FiveDayForcast />
     </div>
-  )
+  );
 }
 
-
-export default Weather
+export default Weather;
