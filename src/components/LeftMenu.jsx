@@ -26,8 +26,8 @@ function LeftMenu() {
   ];
 
   return (
-    <div className="flex flex-row">
-      <div className="bg-white bg-opacity-50 flex flex-col  rounded-xl w-fit mx-2 h-600 ">
+    <div className="flex h-full">
+      <div className="bg-white bg-opacity-50 flex flex-col  rounded-xl w-fit mx-2 ">
         {menuItems.map((item) => (
           <Link key={item.id} to={ item.title === "weather" ? "" : item.title}>
             <button className="py-2 w-full px-1 my-2 mt-6 rounded-lg hover:bg-white flex flex-col items-center">

@@ -1,18 +1,14 @@
 import React from "react";
-import { UilTemperatureHalf } from "@iconscout/react-unicons";
-import { UilRaindropsAlt } from "@iconscout/react-unicons";
-import { UilWind } from "@iconscout/react-unicons";
-import { UilSun } from "@iconscout/react-unicons";
 import WeatherWidget from "./WeatherWidget";
 
 function TodayWeatherDetails({ data }) {
   return (
-    <div className=" mt-6 flex justify-between h-full  items-center">
-      <div className=" flex flex-col items-center justify-center">
+    <div className=" mt-4 flex justify-between  bg-gray-200 h-56">
+      <div className=" flex flex-col justify-between ">
         <WeatherWidget title={"Humidity"} />
         <WeatherWidget title={"Wind"} />
       </div>
-      <div>
+      <div className=" flex flex-col justify-between ">
         <WeatherWidget title={"Pressure"} />
         <WeatherWidget title={"Sunrise"} />
       </div>

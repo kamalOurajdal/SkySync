@@ -8,7 +8,7 @@ function TodayBriefWeather( ) {
 
   
   return (
-    <div className='flex justify-between items-center mt-2 w-500'>
+    <div className='flex justify-between items-center mt-2 '>
 
       <div className='mt-5'>
         <p className='font-bold text-3xl flex items-center'>Agadir, MA <UilMapMarker size={35} className="ml-5"/></p>

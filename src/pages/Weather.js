@@ -20,7 +20,7 @@ function Weather() {
   };
 
   return (
-    <div className=''>
+    <div className='ml-2 w-2/3  flex flex-col overflow-auto scroll-ms-1'>
       <SearchBar
         onSearchChange={handleSearchChange}
         CurrentLocation={handleLocation}

@@ -36,12 +36,12 @@ function SearchBar({ onSearchChange, CurrentLocation }) {
   
 
   return (
-    <div className='flex justify-between flex-row-reverse items-center'>
+    <div className='flex justify-between flex-row-reverse items-center '>
       <div>
-      <UilMapMarker onClick={getLocation} size={35} className="text-white hover:cursor-pointer mr-44" />
+      <UilMapMarker onClick={getLocation} size={35} className="text-white hover:cursor-pointer " />
        
       </div>
-      <div className='w-2/3 ml-2 '>
+      <div className='w-full mr-4 '>
         <input type="text"
           placeholder='Search for a city...'
           className='bg-gray-200 rounded-lg h-10 w-full pl-5 focus:outline-none'

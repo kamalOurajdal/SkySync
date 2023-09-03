@@ -10,7 +10,7 @@ import Settings from "./pages/Settings";
 function App() {
   return (
     <div
-      className=" mx-auto max-w-screen-lg mt-4 py-5 px-3 shadow-xl shadow-gray-400 h-fit rounded-lg  bg-cover bg-center "
+      className=" mx-auto max-w-screen-lg mt-4 py-4 px-3 shadow-xl shadow-gray-400 h-600 rounded-lg  bg-cover bg-center "
       style={{ backgroundImage: `url(${weather_bg})` }}
     >
       <BrowserRouter>
