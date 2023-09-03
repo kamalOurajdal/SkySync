@@ -1,11 +1,13 @@
 import React from 'react'
+import TodayBriefWeather from '../components/TodayBriefWeather'
 
 function Weather() {
   return (
     <div>
-      Weather
+      <TodayBriefWeather />
     </div>
   )
 }
+
 
 export default Weather
