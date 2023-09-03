@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import TodayBriefWeather from '../components/TodayBriefWeather'
 import SearchBar from '../components/SearchBar';
 import TodayForecast from '../components/TodayForecast';
+import TodayWeatherDetails from '../components/TodayWeatherDetails';
+import WeatherWidget from '../components/WeatherWidget';
 
 function Weather() {
   const [weather, setWeather] = useState({});
@@ -18,14 +20,18 @@ function Weather() {
   };
 
   return (
-    <div>
+    <div className=''>
       <SearchBar
         onSearchChange={handleSearchChange}
         CurrentLocation={handleLocation}
       />
-      <div>
+      <div className=''>
         <TodayBriefWeather />
         <TodayForecast/>
+        <TodayWeatherDetails/>
+        
+
+
       </div>
       
     </div>
