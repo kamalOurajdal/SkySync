@@ -17,7 +17,7 @@ function SearchBar({ onSearchChange, CurrentLocation }) {
   }
 
 
-
+  // get the latitude and longitude of the curent location using location pin
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -42,12 +42,12 @@ function SearchBar({ onSearchChange, CurrentLocation }) {
        
       </div>
       <div className='w-2/3 ml-2 '>
-        <Searched type="text"
+        <input type="text"
           placeholder='Search for a city...'
           className='bg-gray-200 rounded-lg h-10 w-full pl-5 focus:outline-none'
           value={SearchedValue}
           onChange={handleSearchedChange}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress}
         />
       </div>
     </div>
