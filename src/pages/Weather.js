@@ -30,7 +30,6 @@ function Weather() {
     };
 
     fetchWeather();
-    setLocation(null)
   }, [SearchValue, location]);
   console.log("forecast: " + JSON.stringify(weather.dailyForecast, null, 2));
 
@@ -39,7 +38,7 @@ function Weather() {
       <div className="flex flex-col  ml-2 w-100">
         <SearchBar
           onSearchChange={handleSearchChange}
-          CurrentLocation={handleLocation}
+          setLocation={handleLocation}
         />
       <div className="pr-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200  ">
         

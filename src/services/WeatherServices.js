@@ -145,11 +145,11 @@ const getFormattedWeatherData = async (searchParams) => {
     // get the current weather if the location pin is clicked
   if (searchParams.location) {
      // Fetch current weather data and format it
-    const formattedCurrentWeather = ({} = await getWeatherData("weather", {
+    const formattedCurrentWeather = await getWeatherData("weather", {
       lat: searchParams.location.latitude,
       lon: searchParams.location.longitude,
       units: searchParams.units,
-    }).then(formatCurrentWeather));
+    }).then(formatCurrentWeather);
 
      // Fetch forecast weather data and format it
     const formattedForecastWeather = await getWeatherData("forecast", {
@@ -162,10 +162,10 @@ const getFormattedWeatherData = async (searchParams) => {
   } 
   else {
     // Fetch current weather data and format it using search bar
-    const formattedCurrentWeather = ({} = await getWeatherData("weather", {
+    const formattedCurrentWeather = await getWeatherData("weather", {
       q: searchParams.SearchValue,
       units: searchParams.units,
-    }).then(formatCurrentWeather));
+    }).then(formatCurrentWeather);
     // Fetch forecast weather data and format it using search bar
     const formattedForecastWeather = await getWeatherData("forecast", {
       q: searchParams.SearchValue,

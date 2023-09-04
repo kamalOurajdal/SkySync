@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { UilMapMarker } from "@iconscout/react-unicons";
 import { USERNAME } from "./Constant";
 
-function SearchBar({ onSearchChange, CurrentLocation }) {
+function SearchBar({ onSearchChange, setLocation }) {
   const [SearchedValue, setSearchedValue] = useState("");
+  const [suggestedLocation, setSuggestedLocation] = useState(null)
+  const [showSuggestion, setShowSuggestion] = useState(true)
+  const [suggestions, setSuggestions] = useState([]);
 
   // const handleSearchedChange = (event) => {
   //   setSearchedValue(event.target.value);
@@ -12,6 +15,7 @@ function SearchBar({ onSearchChange, CurrentLocation }) {
     if (onSearchChange && event.key === "Enter")
       if (event.key === "Enter") {
         onSearchChange(SearchedValue);
+        setShowSuggestion(false)
       }
   };
 
@@ -21,7 +25,7 @@ function SearchBar({ onSearchChange, CurrentLocation }) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          CurrentLocation({ latitude, longitude }); // Pass location to parent
+          setLocation({ latitude, longitude }); // Pass location to parent
         },
         (error) => {
           console.error("Error getting location:", error);
@@ -32,7 +36,7 @@ function SearchBar({ onSearchChange, CurrentLocation }) {
     }
   };
 
-  const [suggestions, setSuggestions] = useState([]);
+  
 
   const handleChange = async (e) => {
     const query = e.target.value;
@@ -40,7 +44,7 @@ function SearchBar({ onSearchChange, CurrentLocation }) {
 
     try {
       const response = await fetch(
-        `http://api.geonames.org/postalCodeSearchJSON?placename_startsWith=${query}&maxRows=5&username=${USERNAME}`
+        `http://api.geonames.org/postalCodeSearchJSON?placename_startsWith=${query}&maxRows=10&username=${USERNAME}`
       );
 
       if (!response.ok) {
@@ -49,13 +53,24 @@ function SearchBar({ onSearchChange, CurrentLocation }) {
 
       const data = await response.json();
       const citySuggestions = data.postalCodes.map((city) => {
-        return { name: city.placeName, countryCode: city.countryCode };
+        return {
+          name: city.placeName,
+          countryCode: city.countryCode,
+          coord: { lat: city.lat, lng: city.lng },
+        };
       });
       setSuggestions(citySuggestions);
     } catch (error) {
       console.error(error);
     }
+    setShowSuggestion(true)
   };
+
+  const handleClickSuggestion = (latitude, longitude) =>{
+    setSuggestedLocation({latitude, longitude})
+    setLocation(suggestedLocation)
+    setShowSuggestion(false)
+  }
 
   return (
     <div className="flex justify-between flex-row-reverse items-center ">
@@ -75,13 +90,25 @@ function SearchBar({ onSearchChange, CurrentLocation }) {
           onChange={handleChange}
           onKeyDown={handleKeyPress}
         />
-        <div className="absolute bg-green-300 rounded-lg w-150 pl-5 focus:outline-none">
-          {suggestions.map((city, index) => (
-            <button key={index} className=" border border-red-300 block w-full">
-              {city.name}, {city.countryCode}
-            </button>
-          ))}
-        </div>
+        {SearchedValue && showSuggestion && (
+          <div className="absolute bg-gray-200 rounded-lg w-150 p-5 focus:outline-none h-40 overflow-auto scrollbar-thin scrollbar-thumb-gray-300">
+            {suggestions.map(({name, countryCode, coord} , index) => (
+              <>
+                <button
+                  key={index}
+                  className="border-b border-gray-400 h-10 block text-left w-full"
+                  onClick={() => handleClickSuggestion(coord.lat, coord.lng)}
+                >
+                  <span className="font-bold">{name}</span>,{" "}
+                  {countryCode}
+                </button>
+              </>
+            ))}
+            {console.log(
+              "suggestions : " + JSON.stringify(suggestions, null, 2)
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
