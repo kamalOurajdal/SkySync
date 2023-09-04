@@ -3,7 +3,6 @@ import TodayBriefWeather from "../components/TodayBriefWeather";
 import SearchBar from "../components/SearchBar";
 import TodayForecast from "../components/TodayForecast";
 import TodayWeatherDetails from "../components/TodayWeatherDetails";
-import WeatherWidget from "../components/WeatherWidget";
 import FiveDayForcast from "../components/FiveDayForecast";
 import getFormattedWeatherData from "./../services/WeatherServices";
 

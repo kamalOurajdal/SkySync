@@ -4,8 +4,7 @@ import { USERNAME } from "./Constant";
 
 function SearchBar({ onSearchChange, setLocation }) {
   const [SearchedValue, setSearchedValue] = useState("");
-  const [suggestedLocation, setSuggestedLocation] = useState(null)
-  const [showSuggestion, setShowSuggestion] = useState(true)
+  const [showSuggestion, setShowSuggestion] = useState(true);
   const [suggestions, setSuggestions] = useState([]);
 
   // const handleSearchedChange = (event) => {
@@ -15,7 +14,7 @@ function SearchBar({ onSearchChange, setLocation }) {
     if (onSearchChange && event.key === "Enter")
       if (event.key === "Enter") {
         onSearchChange(SearchedValue);
-        setShowSuggestion(false)
+        setShowSuggestion(false);
       }
   };
 
@@ -36,15 +35,13 @@ function SearchBar({ onSearchChange, setLocation }) {
     }
   };
 
-  
-
   const handleChange = async (e) => {
     const query = e.target.value;
-    setSearchedValue(query);
+    setSearchedValue(e.target.value);
 
     try {
       const response = await fetch(
-        `http://api.geonames.org/postalCodeSearchJSON?placename_startsWith=${query}&maxRows=10&username=${USERNAME}`
+        `http://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=${USERNAME}`
       );
 
       if (!response.ok) {
@@ -52,10 +49,11 @@ function SearchBar({ onSearchChange, setLocation }) {
       }
 
       const data = await response.json();
-      const citySuggestions = data.postalCodes.map((city) => {
+      const citySuggestions = data.geonames.map((city) => {
         return {
-          name: city.placeName,
-          countryCode: city.countryCode,
+          name: city.name,
+          countryName: city.countryName,
+          region: city.adminName1,
           coord: { lat: city.lat, lng: city.lng },
         };
       });
@@ -63,14 +61,13 @@ function SearchBar({ onSearchChange, setLocation }) {
     } catch (error) {
       console.error(error);
     }
-    setShowSuggestion(true)
+    setShowSuggestion(true);
   };
 
-  const handleClickSuggestion = (latitude, longitude) =>{
-    setSuggestedLocation({latitude, longitude})
-    setLocation(suggestedLocation)
-    setShowSuggestion(false)
-  }
+  const handleClickSuggestion = (latitude, longitude) => {
+    setLocation({ latitude, longitude });
+    setShowSuggestion(false);
+  };
 
   return (
     <div className="flex justify-between flex-row-reverse items-center ">
@@ -91,16 +88,18 @@ function SearchBar({ onSearchChange, setLocation }) {
           onKeyDown={handleKeyPress}
         />
         {SearchedValue && showSuggestion && (
-          <div className="absolute bg-gray-200 rounded-lg w-150 p-5 focus:outline-none h-40 overflow-auto scrollbar-thin scrollbar-thumb-gray-300">
-            {suggestions.map(({name, countryCode, coord} , index) => (
+          <div className="absolute bg-gray-200 rounded-lg w-150  focus:outline-none  shadow-xl shadow-gray-500 h-fit max-h-48 overflow-auto scrollbar-thin scrollbar-thumb-gray-300">
+            {suggestions.map(({ name, countryName, region, coord }, index) => (
               <>
                 <button
                   key={index}
-                  className="border-b border-gray-400 h-10 block text-left w-full"
+                  className="border-b border-gray-300 h-14 px-5 block text-left w-full hover:shadow-lg hover:bg-white "
                   onClick={() => handleClickSuggestion(coord.lat, coord.lng)}
                 >
-                  <span className="font-bold">{name}</span>,{" "}
-                  {countryCode}
+                  <p className="font-bold" >{name}, <span className="text-gray-400">{countryName}</span></p>
+                  
+                  <span className="text-gray-600"> {region}</span>
+
                 </button>
               </>
             ))}
