@@ -30,7 +30,6 @@ function Weather() {
 
     fetchWeather();
   }, [SearchValue, location]);
-  console.log("forecast: " + JSON.stringify(weather.dailyForecast, null, 2));
 
   return (
     <div className="flex w-full ">

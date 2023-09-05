@@ -24,7 +24,7 @@ function SearchBar({ onSearchChange, setLocation }) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setLocation({ latitude, longitude }); // Pass location to parent
+          setLocation({ lat:latitude, lng:longitude }); // Pass location to parent
         },
         (error) => {
           console.error("Error getting location:", error);
@@ -65,7 +65,7 @@ function SearchBar({ onSearchChange, setLocation }) {
   };
 
   const handleClickSuggestion = (latitude, longitude) => {
-    setLocation({ latitude, longitude });
+    setLocation({ lat:latitude, lng:longitude });
     setShowSuggestion(false);
   };
 
@@ -103,9 +103,6 @@ function SearchBar({ onSearchChange, setLocation }) {
                 </button>
               </>
             ))}
-            {console.log(
-              "suggestions : " + JSON.stringify(suggestions, null, 2)
-            )}
           </div>
         )}
       </div>

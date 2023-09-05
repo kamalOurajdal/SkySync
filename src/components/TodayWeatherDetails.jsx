@@ -32,9 +32,7 @@ function TodayWeatherDetails({ currentWeather }) {
 
   const sunsetTime = formatToLocalTime(sunset, timezone/3600, "HH:mm");
   const sunriseTime = formatToLocalTime(sunrise, timezone/3600,"HH:mm ");
-  // consol both
-  console.log("sunset: " + sunsetTime);
-  console.log("sunrise: " + sunriseTime);
+
 
   return (
     <div className=" mt-4 flex justify-between  h-60">

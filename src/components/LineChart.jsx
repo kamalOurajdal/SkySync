@@ -3,7 +3,6 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, Ticks } from "chart.js/auto";
 
 const LineChart = ({data}) => {
-  console.log(data);
   const dataChart = {
     labels: data.time,
     datasets: [

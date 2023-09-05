@@ -146,15 +146,15 @@ const getFormattedWeatherData = async (searchParams) => {
   if (searchParams.location) {
      // Fetch current weather data and format it
     const formattedCurrentWeather = await getWeatherData("weather", {
-      lat: searchParams.location.latitude,
-      lon: searchParams.location.longitude,
+      lat: searchParams.location.lat,
+      lon: searchParams.location.lng,
       units: searchParams.units,
     }).then(formatCurrentWeather);
 
      // Fetch forecast weather data and format it
     const formattedForecastWeather = await getWeatherData("forecast", {
-      lat: searchParams.location.latitude,
-      lon: searchParams.location.longitude,
+      lat: searchParams.location.lat,
+      lon: searchParams.location.lng,
       units: searchParams.units,
     }).then(formatForecastWeather);
     // Return both current and forecast weather data
