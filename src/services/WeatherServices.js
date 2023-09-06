@@ -1,5 +1,8 @@
 import { DateTime } from "luxon";
 import { WEATHER_API_KEY } from "../components/Constant";
+import React from "react";
+//import all wheather icon like 01d, 02d 03d ...
+
 
 // API key and base URL for OpenWeatherMap API
 const WEATHER_API = WEATHER_API_KEY;
@@ -182,9 +185,16 @@ const formatToLocalTime = (
   format= "ccc, dd LLL ' | 'HH:mm | a"
 ) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
 
+const getIcon =  (iconName) =>{
+  const iconImage = require(`./../media/icons/weather_icon/${iconName}.png`)
+  return iconImage
+}
+
+
+
 
 
 export default getFormattedWeatherData;
 
-export { getWeatherData, formatToLocalTime, formatCurrentWeather };
+export { getWeatherData, formatToLocalTime, formatCurrentWeather, getIcon };
 

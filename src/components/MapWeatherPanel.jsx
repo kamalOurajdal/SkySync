@@ -1,12 +1,7 @@
 import React from "react";
-import { formatToLocalTime } from "../services/WeatherServices";
-import WeatherWidget from "./WeatherWidget";
-import humidity_icon from "./../media/icons/humidity_icon.png";
-import wind_icon from "./../media/icons/wind_icon.png";
-import sunset_icon from "./../media/icons/sunset_icon.png";
-import sunrise_icon from "./../media/icons/sunrise_icon.png";
-import pressure_icon from "./../media/icons/pressure_icon2.png";
+import { formatToLocalTime, getIcon } from "../services/WeatherServices";
 import { UilMapMarker } from '@iconscout/react-unicons'
+import sunny_icon from "./../media/icons/weather_icon/01d.png";
 
 function MapWeatherPanel({ weatherData }) {
   const {
@@ -37,6 +32,7 @@ function MapWeatherPanel({ weatherData }) {
     timezone / 60,
     "HH:mm "
   );
+
   return (
     <div className="w-60 p-2 bg-white bg-opacity-50 rounded-xl  h-full mt-4 ">
       {weatherData && (
@@ -46,7 +42,7 @@ function MapWeatherPanel({ weatherData }) {
             {localeTime[0]}
           </p>
           <p className="mt-6 flex items-center justify-center  text-lg font-bold">{weatherData.name} <UilMapMarker size={20}/></p>
-          <div className="mt-4 flex">
+          <div className="mt-4 flex justify-between">
             
             <div className="">
               <p className="text-6xl font-bold ">
@@ -55,8 +51,9 @@ function MapWeatherPanel({ weatherData }) {
               <p className=" text-gray-600">{weatherData.description}</p>
             </div>
             <img
-              className="w-40"
-              src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
+              className="h-20"
+              // src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
+              src={getIcon(icon)}
             />
           </div>
           <div className="text-center font-medium text-gray-800">
