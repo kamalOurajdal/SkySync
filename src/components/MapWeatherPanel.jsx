@@ -1,5 +1,12 @@
 import React from "react";
 import { formatToLocalTime } from "../services/WeatherServices";
+import WeatherWidget from "./WeatherWidget";
+import humidity_icon from "./../media/icons/humidity_icon.png";
+import wind_icon from "./../media/icons/wind_icon.png";
+import sunset_icon from "./../media/icons/sunset_icon.png";
+import sunrise_icon from "./../media/icons/sunrise_icon.png";
+import pressure_icon from "./../media/icons/pressure_icon2.png";
+import { UilMapMarker } from '@iconscout/react-unicons'
 
 function MapWeatherPanel({ weatherData }) {
   const {
@@ -24,30 +31,39 @@ function MapWeatherPanel({ weatherData }) {
   const localeTime = formatToLocalTime(Number(dt), Number(timezone) / 60).split(
     "|"
   );
+  const sunsetTime = formatToLocalTime(Number(sunset), timezone / 60, "HH:mm");
+  const sunriseTime = formatToLocalTime(
+    Number(sunrise),
+    timezone / 60,
+    "HH:mm "
+  );
   return (
-    <div className="w-60 pl-3 bg-white bg-opacity-50 rounded-xl pt-4 h-full mt-4 ">
+    <div className="w-60 p-2 bg-white bg-opacity-50 rounded-xl  h-full mt-4 ">
       {weatherData && (
         <div>
-          <p className="text-3xl font-bold text-center text-gray-500">
-            {localeTime[1]}
+          <p className="text-6xl  text-center text-gray-500">{localeTime[1]}</p>
+          <p className="text-xl font-bold text-center text-gray-500">
+            {localeTime[0]}
           </p>
-          <div className="mt-3 flex ">
+          <p className="mt-6 flex items-center justify-center  text-lg font-bold">{weatherData.name} <UilMapMarker size={20}/></p>
+          <div className="mt-4 flex">
+            
             <div className="">
               <p className="text-6xl font-bold ">
                 {Math.round(weatherData.temp)}°
               </p>
+              <p className=" text-gray-600">{weatherData.description}</p>
             </div>
-
             <img
-              className="w-40  "
+              className="w-40"
               src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
             />
           </div>
-          <p>{weatherData.description}</p>
-          <p>{weatherData.name}</p>
-          <p className=" text-sm">
-            {description}: {Math.round(temp_max)}/{Math.round(temp_min)}
-          </p>
+          <div className="text-center font-medium text-gray-800">
+            
+            <p className=" text-sm">{Math.round(temp_max)}°/{Math.round(temp_min)}° feels like <span className="font-bold">{Math.round(feels_like)}°</span>
+            </p>
+          </div>
         </div>
       )}
     </div>
