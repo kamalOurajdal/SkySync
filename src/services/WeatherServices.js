@@ -179,7 +179,7 @@ const getFormattedWeatherData = async (searchParams) => {
 const formatToLocalTime = (
   secs,
   zone,
-  format,
+  format= "ccc, dd LLL ' | 'HH:mm | a"
 ) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
 
 

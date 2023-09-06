@@ -30,8 +30,8 @@ function TodayWeatherDetails({ currentWeather }) {
 
 
 
-  const sunsetTime = formatToLocalTime(sunset, timezone/3600, "HH:mm");
-  const sunriseTime = formatToLocalTime(sunrise, timezone/3600,"HH:mm ");
+  const sunsetTime = formatToLocalTime(sunset, timezone/60, "HH:mm");
+  const sunriseTime = formatToLocalTime(sunrise, timezone/60,"HH:mm ");
 
 
   return (

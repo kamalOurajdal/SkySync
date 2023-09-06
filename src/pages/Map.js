@@ -36,7 +36,7 @@ const Map = () => {
         lat: lat,
         lon: lng,
         units: "metric",
-      }).then(formatCurrentWeather).then((data) => setWeatherData(data));
+      }).then(formatCurrentWeather).then((data) => setWeatherData(data.currentWeather));
       console.log("fetch weather");
     };
     if (location) {
@@ -61,12 +61,12 @@ const Map = () => {
           <span className="font-bold text-lg  mx-auto">{weatherData.name}</span>
           <div className="flex items-center justify-between">
           <img
-              src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@4x.png`}
+              src={`http://openweathermap.org/img/wn/${weatherData.icon}@4x.png`}
               alt=""
               className="w-16"
             />
             <p className="text-xl font-bold">
-              {Math.round(weatherData.main.temp) + "°C"}
+              {Math.round(weatherData.temp) + "°C"}
             </p>
           </div>
         </div>
