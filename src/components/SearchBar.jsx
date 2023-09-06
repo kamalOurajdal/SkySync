@@ -24,7 +24,7 @@ function SearchBar({ onSearchChange, setLocation }) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setLocation({ lat:latitude, lng:longitude }); // Pass location to parent
+          setLocation({ lat: latitude, lng: longitude }); // Pass location to parent
         },
         (error) => {
           console.error("Error getting location:", error);
@@ -65,12 +65,12 @@ function SearchBar({ onSearchChange, setLocation }) {
   };
 
   const handleClickSuggestion = (latitude, longitude) => {
-    setLocation({ lat:latitude, lng:longitude });
+    setLocation({ lat: latitude, lng: longitude });
     setShowSuggestion(false);
   };
 
   return (
-    <div className="flex justify-between flex-row-reverse items-center ">
+    <div className="flex justify-between flex-row-reverse items-center w-100">
       <div>
         <UilMapMarker
           onClick={getLocation}
@@ -88,20 +88,24 @@ function SearchBar({ onSearchChange, setLocation }) {
           onKeyDown={handleKeyPress}
         />
         {SearchedValue && showSuggestion && (
-          <div className="absolute bg-gray-200 rounded-lg w-150  focus:outline-none  shadow-xl shadow-gray-500 h-fit max-h-48 overflow-auto scrollbar-thin scrollbar-thumb-gray-300">
+          <div
+            className="absolute bg-gray-200 rounded-lg w-150 
+           focus:outline-none  shadow-xl shadow-gray-500 h-fit 
+           max-h-48 overflow-auto scrollbar-thin scrollbar-thumb-gray-300
+           z-1000"
+          >
             {suggestions.map(({ name, countryName, region, coord }, index) => (
-              <>
-                <button
-                  key={index}
-                  className="border-b border-gray-300 h-14 px-5 block text-left w-full hover:shadow-lg hover:bg-white "
-                  onClick={() => handleClickSuggestion(coord.lat, coord.lng)}
-                >
-                  <p className="font-bold" >{name}, <span className="text-gray-400">{countryName}</span></p>
-                  
-                  <span className="text-gray-600"> {region}</span>
+              <button
+                key={index}
+                className="border-b border-gray-300 h-14 px-5 block text-left w-full hover:shadow-lg hover:bg-white "
+                onClick={() => handleClickSuggestion(coord.lat, coord.lng)}
+              >
+                <p className="font-bold">
+                  {name}, <span className="text-gray-400">{countryName}</span>
+                </p>
 
-                </button>
-              </>
+                <span className="text-gray-600"> {region}</span>
+              </button>
             ))}
           </div>
         )}

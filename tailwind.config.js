@@ -18,6 +18,10 @@ module.exports = {
         100 : '40rem',
         150 : '37rem',
 
+      },
+      //zindex
+      zIndex: {
+        '1000':1010,
       }
     },
   },

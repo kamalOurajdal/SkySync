@@ -33,24 +33,23 @@ function Weather() {
 
   return (
     <div className="flex w-full ">
-      <div className="flex flex-col  ml-2 w-100">
+      <div className="flex flex-col  ml-2 ">
         <SearchBar
           onSearchChange={handleSearchChange}
           setLocation={handleLocation}
         />
-      <div className="pr-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200  ">
-        
-        {weather.currentWeather && (
-          <>
-            <TodayBriefWeather currentWeather={weather.currentWeather} />
-            <TodayForecast todayForecast={weather.todayForecast}/>
-            <TodayWeatherDetails currentWeather = {weather.currentWeather}/>
-          </>
-        )}
+        <div className="w-100 pr-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200  ">
+          {weather.currentWeather && (
+            <>
+              <TodayBriefWeather currentWeather={weather.currentWeather} />
+              <TodayForecast todayForecast={weather.todayForecast} />
+              <TodayWeatherDetails currentWeather={weather.currentWeather} />
+            </>
+          )}
+        </div>
       </div>
-      </div>
-      
-      <FiveDayForcast dailyForecast={weather.dailyForecast}/>
+
+      <FiveDayForcast dailyForecast={weather.dailyForecast} />
     </div>
   );
 }

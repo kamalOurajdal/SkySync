@@ -186,5 +186,5 @@ const formatToLocalTime = (
 
 export default getFormattedWeatherData;
 
-export { getWeatherData, formatToLocalTime };
+export { getWeatherData, formatToLocalTime, formatCurrentWeather };
 
