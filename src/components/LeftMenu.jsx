@@ -20,7 +20,7 @@ function LeftMenu() {
     },
     {
       id: 3,
-      title: "settings",
+      title: "about",
       icon: <UilSetting />,
     },
   ];
@@ -29,11 +29,10 @@ function LeftMenu() {
     <div className="flex h-full">
       <div className="bg-white bg-opacity-80 flex flex-col  rounded-xl w-fit mx-2 ">
         {menuItems.map((item) => (
-          <button className="py-2 w-full px-1 my-2 mt-6 rounded-lg hover:bg-white hover:shadow-md ">
+          <button key={item.id} className="py-2 w-full px-1 my-2 mt-6 rounded-lg hover:bg-white hover:shadow-md ">
             <Link
-              key={item.id}
               to={item.title === "weather" ? "" : item.title}
-              className="flex flex-col items-center justify-center checked:bg-blue-600"
+              className="h-full w-full flex flex-col items-center justify-center"
             >
               {item.icon}
               {item.title}

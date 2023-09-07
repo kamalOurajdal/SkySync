@@ -10,10 +10,10 @@ const LineChart = ({data}) => {
         data: data.data,
         fill: false,
         // responsive: true,
-        borderColor: 'yellow',
-        backgroundColor:'red',
+        borderColor: 'orange',
+        backgroundColor:'blue',
         pointHoverBackgroundColor:'blue',
-        tension: 0.1,
+        tension: 0.2,
       },
     ],
   };
@@ -40,8 +40,8 @@ const LineChart = ({data}) => {
   };
 
   return (
-    <div className=" pt-6">
-      <Line data={dataChart} options={options}   height={20}/>
+    <div className=" mt-6  w-full px-6">
+      <Line data={dataChart} options={options}   height={20} />
     </div>
   );
 };

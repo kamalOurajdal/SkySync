@@ -9,7 +9,7 @@ function FiveDayForcast({ dailyForecast }) {
       icon: (
         <img
           src={getIcon(dailyForecast[day].icon) }
-          className="w-12"
+          className="w-10"
         />
       ),
       statu: dailyForecast[day].description,
@@ -23,6 +23,7 @@ function FiveDayForcast({ dailyForecast }) {
       <p className="font-bold uppercase text-xs text-gray-700">
         7-Day forecast
       </p>
+      <hr className="border-2 mt-2 border-gray-300"/>
       <div className="flex flex-col w-full h-full justify-between py-6 ">
         {DayForcast.map(({ day, icon, statu, DFrom, DTo }, index) => (
           <div className="flex justify-between items-center" key={index}>

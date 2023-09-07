@@ -95,13 +95,14 @@ const formatForecastWeather = (data) => {
     const date = new Date(day);
 
     const daysOfWeek = [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat",
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      
     ];
 
     const dayName = daysOfWeek[date.getDay()];
@@ -151,14 +152,14 @@ const getFormattedWeatherData = async (searchParams) => {
     const formattedCurrentWeather = await getWeatherData("weather", {
       lat: searchParams.location.lat,
       lon: searchParams.location.lng,
-      units: searchParams.units,
+      units: "metric", //set metric default
     }).then(formatCurrentWeather);
 
      // Fetch forecast weather data and format it
     const formattedForecastWeather = await getWeatherData("forecast", {
       lat: searchParams.location.lat,
       lon: searchParams.location.lng,
-      units: searchParams.units,
+      units: "metric",
     }).then(formatForecastWeather);
     // Return both current and forecast weather data
     return { ...formattedCurrentWeather, ...formattedForecastWeather };
@@ -167,12 +168,12 @@ const getFormattedWeatherData = async (searchParams) => {
     // Fetch current weather data and format it using search bar
     const formattedCurrentWeather = await getWeatherData("weather", {
       q: searchParams.SearchValue,
-      units: searchParams.units,
-    }).then(formatCurrentWeather);
+      units: "metric",
+    }).then((data) => formatCurrentWeather(data));
     // Fetch forecast weather data and format it using search bar
     const formattedForecastWeather = await getWeatherData("forecast", {
       q: searchParams.SearchValue,
-      units: searchParams.units,
+      units: "metric",
     }).then(formatForecastWeather);
     // Return both current and forecast weather data
     return { ...formattedCurrentWeather, ...formattedForecastWeather };

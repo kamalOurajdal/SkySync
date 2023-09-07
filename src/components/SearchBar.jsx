@@ -7,9 +7,7 @@ function SearchBar({ onSearchChange, setLocation }) {
   const [showSuggestion, setShowSuggestion] = useState(true);
   const [suggestions, setSuggestions] = useState([]);
 
-  // const handleSearchedChange = (event) => {
-  //   setSearchedValue(event.target.value);
-  // }
+
   const handleKeyPress = (event) => {
     if (onSearchChange && event.key === "Enter")
       if (event.key === "Enter") {

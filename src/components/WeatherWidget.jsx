@@ -1,5 +1,4 @@
 import React from "react";
-import { UilSun } from "@iconscout/react-unicons";
 
 function WeatherWidget({ info }) {
   return (

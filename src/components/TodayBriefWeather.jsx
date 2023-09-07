@@ -1,41 +1,56 @@
-import React from 'react'
-import { UilMapMarker } from '@iconscout/react-unicons'
-import { getIcon } from '../services/WeatherServices'
+import React from "react";
+import { UilMapMarker } from "@iconscout/react-unicons";
+import { formatToLocalTime, getIcon } from "../services/WeatherServices";
 
-
-function TodayBriefWeather( {currentWeather} ) {
+function TodayBriefWeather({ currentWeather }) {
   const {
     feels_like,
     temp_min,
     temp_max,
-    humidity,
     name,
     dt,
     country,
-    sunrise,
-    sunset,
     main,
     icon,
-    speed,
-    description
-  } = currentWeather
+    temp,
+    timezone,
+  } = currentWeather;
+  const localeTime = formatToLocalTime(Number(dt), Number(timezone) / 60).split(
+    "|"
+  );
 
-
-  
   return (
-    <div className='flex justify-between items-center '>
+    <div className="mt-3">
+      <div className="flex justify-between items-start ">
+        <div>
+          <p className="leading-normal">
+            <p className="font-bold text-6xl  text-gray-700">
+              {Math.round(temp)}°
+            </p>
+            <p className="text-gray-600 text-md font-medium">{main} </p>
+          </p>
+          <p className="leading-7 mt-2">
+            <p className="font-bold text-xl flex items-center text-gray-700 ">
+              {name}, {country}{" "}
+              <UilMapMarker size={20} className="ml-2 text-red-500" />
+            </p>
 
-      <div className='mt-5'>
-        <p className='font-bold text-3xl flex items-center'>{name}, {country} <UilMapMarker size={35} className="ml-5"/></p>
-        <p className='text-gray-400 text-sm'>{description}: {Math.round(temp_max)}/{Math.round(temp_min)}</p>
-        <p className='font-bold text-5xl mt-9' > {Math.round(feels_like)}°</p>
+            <p className="text-gray-600 text-md font-medium">
+              {Math.round(temp_max)}° / {Math.round(temp_min)}° feels like{" "}
+              {Math.round(feels_like)}°
+            </p>
+          </p>
+        </div>
+        <p className="text-center ">
+          <p className="text-4xl flex justify-center items-end text-gray-500">
+            {localeTime[1]}
+          </p>
+          <p className="text-sm font-bold  text-gray-500">{localeTime[0]}</p>
+        </p>
+        <img className="w-36 mr-2  mt-3" src={getIcon(icon)} />
       </div>
-      <img
-        className='w-40 mr-10'
-        src={getIcon(icon)}
-      />
     </div>
-  )
+  );
 }
 
-export default TodayBriefWeather
+export default TodayBriefWeather;

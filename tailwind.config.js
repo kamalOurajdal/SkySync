@@ -17,6 +17,8 @@ module.exports = {
         1000 : '1000px',
         100 : '40rem',
         150 : '37rem',
+        98 : '31rem',
+        68 : '16.5rem',
 
       },
       //zindex

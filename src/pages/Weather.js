@@ -5,16 +5,14 @@ import TodayForecast from "../components/TodayForecast";
 import TodayWeatherDetails from "../components/TodayWeatherDetails";
 import FiveDayForcast from "../components/FiveDayForecast";
 import getFormattedWeatherData from "./../services/WeatherServices";
-import loading_svg from "../media/icons/weather_icon/loading1.svg";
+import loading_svg from "../media/icons/weather_icon/loading.svg";
 import { useParams } from "react-router-dom";
 
 function Weather() {
   const [weather, setWeather] = useState({});
-  const [units, setUnits] = useState("metric");
   const [loading, setLoading] = useState(true); // Add loading state
 
   const { lat, lon } = useParams();
-  console.log("data :", lat, lon);
   useEffect(() => {
     if (lat && lon) {
       setLocation({ lat: lat, lng: lon });
@@ -39,7 +37,6 @@ function Weather() {
         const data = await getFormattedWeatherData({
           location,
           SearchValue,
-          units,
         });
         setWeather(data);
       } finally {
@@ -48,11 +45,10 @@ function Weather() {
     };
 
     fetchWeather();
-  }, [SearchValue, location, units]);
+  }, [SearchValue, location]);
 
   return (
-    <>
-      <div className="flex flex-col w-full h-full">
+      <div className="flex flex-col w-full h-full ml-2">
         <SearchBar
           onSearchChange={handleSearchChange}
           setLocation={handleLocation}
@@ -73,7 +69,6 @@ function Weather() {
           </div>
         )}
       </div>
-    </>
   );
 }
 
