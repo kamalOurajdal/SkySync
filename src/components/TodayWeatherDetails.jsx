@@ -36,8 +36,8 @@ function TodayWeatherDetails({ currentWeather }) {
 
   return (
     <div className=" mt-4 flex justify-between  h-60">
-      <div className=" flex flex-col justify-between">
-        <WeatherWidget info={{title:"humidity",unit: "%", data: humidity, icon:humidity_icon}} />
+      <div className=" flex flex-col justify-between ">
+        <WeatherWidget siz info={{title:"humidity",unit: "%", data: humidity, icon:humidity_icon}} />
         <WeatherWidget info={{title:"wind",unit: "m/s", data: speed, icon:wind_icon}} />
       </div>
       <div className=" flex flex-col justify-between ">

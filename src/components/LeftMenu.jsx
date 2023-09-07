@@ -27,15 +27,18 @@ function LeftMenu() {
 
   return (
     <div className="flex h-full">
-      <div className="bg-white bg-opacity-50 flex flex-col  rounded-xl w-fit mx-2 ">
+      <div className="bg-white bg-opacity-80 flex flex-col  rounded-xl w-fit mx-2 ">
         {menuItems.map((item) => (
-          <Link key={item.id} to={ item.title === "weather" ? "" : item.title}>
-            <button className="py-2 w-full px-1 my-2 mt-6 rounded-lg hover:bg-white flex flex-col items-center">
-              <img src="" alt="" />
+          <button className="py-2 w-full px-1 my-2 mt-6 rounded-lg hover:bg-white hover:shadow-md ">
+            <Link
+              key={item.id}
+              to={item.title === "weather" ? "" : item.title}
+              className="flex flex-col items-center justify-center checked:bg-blue-600"
+            >
               {item.icon}
               {item.title}
-            </button>
-          </Link>
+            </Link>
+          </button>
         ))}
       </div>
       <Outlet />

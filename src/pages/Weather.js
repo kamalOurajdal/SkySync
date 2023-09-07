@@ -5,10 +5,21 @@ import TodayForecast from "../components/TodayForecast";
 import TodayWeatherDetails from "../components/TodayWeatherDetails";
 import FiveDayForcast from "../components/FiveDayForecast";
 import getFormattedWeatherData from "./../services/WeatherServices";
+import loading_svg from "../media/icons/weather_icon/loading1.svg";
+import { useParams } from "react-router-dom";
 
 function Weather() {
   const [weather, setWeather] = useState({});
   const [units, setUnits] = useState("metric");
+  const [loading, setLoading] = useState(true); // Add loading state
+
+  const { lat, lon } = useParams();
+  console.log("data :", lat, lon);
+  useEffect(() => {
+    if (lat && lon) {
+      setLocation({ lat: lat, lng: lon });
+    }
+  }, [lat, lon]);
 
   const [SearchValue, setSearchValue] = useState("agadir");
   const handleSearchChange = (value) => {
@@ -23,34 +34,46 @@ function Weather() {
   //fetch weather on each time the searched city or location change
   useEffect(() => {
     const fetchWeather = async () => {
-      await getFormattedWeatherData({ location, SearchValue, units }).then(
-        (data) => setWeather(data)
-      );
+      setLoading(true); // Set loading to true before making the API call
+      try {
+        const data = await getFormattedWeatherData({
+          location,
+          SearchValue,
+          units,
+        });
+        setWeather(data);
+      } finally {
+        setLoading(false); // Set loading to false after the API call is complete
+      }
     };
 
     fetchWeather();
-  }, [SearchValue, location]);
+  }, [SearchValue, location, units]);
 
   return (
-    <div className="flex w-full ">
-      <div className="flex flex-col  ml-2 ">
+    <>
+      <div className="flex flex-col w-full h-full">
         <SearchBar
           onSearchChange={handleSearchChange}
           setLocation={handleLocation}
         />
-        <div className="w-100 pr-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200  ">
-          {weather.currentWeather && (
-            <>
+        {loading ? (
+          <div className="flex justify-center items-center h-full w-full">
+            <img src={loading_svg} alt="Loading" className="w-20" />
+          </div>
+        ) : (
+          <div className="flex h-full w-full pb-10  ">
+            <div className="w-100 pr-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 ">
               <TodayBriefWeather currentWeather={weather.currentWeather} />
               <TodayForecast todayForecast={weather.todayForecast} />
               <TodayWeatherDetails currentWeather={weather.currentWeather} />
-            </>
-          )}
-        </div>
-      </div>
+            </div>
 
-      <FiveDayForcast dailyForecast={weather.dailyForecast} />
-    </div>
+            <FiveDayForcast dailyForecast={weather.dailyForecast} />
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

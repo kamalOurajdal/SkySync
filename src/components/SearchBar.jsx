@@ -82,15 +82,15 @@ function SearchBar({ onSearchChange, setLocation }) {
         <input
           type="text"
           placeholder="Search for a city..."
-          className="bg-gray-200 rounded-lg h-10 w-full pl-5 focus:outline-none"
+          className="bg-white bg-opacity-80 rounded-lg h-10 w-full pl-5 focus:outline-none"
           value={SearchedValue}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
         />
         {SearchedValue && showSuggestion && (
           <div
-            className="absolute bg-gray-200 rounded-lg w-150 
-           focus:outline-none  shadow-xl shadow-gray-500 h-fit 
+            className="absolute bg-gray-50 rounded-lg w-150 
+           focus:outline-none  shadow-lg shadow-gray-500 h-fit 
            max-h-48 overflow-auto scrollbar-thin scrollbar-thumb-gray-300
            z-1000"
           >

@@ -1,16 +1,10 @@
 import React from "react";
 import { UilSun } from "@iconscout/react-unicons";
 import LineChart from "./LineChart";
+import { getIcon } from "../services/WeatherServices";
 
 function TodayForecast({ todayForecast }) {
-  /*   const timeSlots = [
-    { time: "6:00", temp: 31, icon: <UilSun/> },
-    { time: "9:00", temp: 30, icon: <UilSun/> },
-    { time: "12:00", temp: 28, icon:<UilSun/> },
-    { time: "15:00", temp: 30, icon:<UilSun/> },
-    { time: "18:00", temp: 26, icon:<UilSun/> },
-    { time: "21:00", temp: 31, icon:<UilSun/> },
-  ]; */
+
 
   const timeSlots = [];
 
@@ -29,7 +23,7 @@ function TodayForecast({ todayForecast }) {
     timeW.push(time);
   });
   return (
-    <div className="bg-white bg-opacity-50 rounded-xl mt-5 p-4 w-full ">
+    <div className="bg-white bg-opacity-80  rounded-xl mt-5 p-4 w-full ">
       <p className="font-bold uppercase text-xs text-gray-400 mb-5 flex flex-col">
         Today's forcast
       </p>
@@ -41,7 +35,7 @@ function TodayForecast({ todayForecast }) {
             className={`font-bold flex flex-col items-center w-full h-24 justify-between `}
           >
             <p className="text-sm">{time}</p>
-            <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />
+            <img src={getIcon(icon)} className="h-9 my-5"/>
             <p className="text-sm font-bold">{temp}°</p>
           </div>
         ))}

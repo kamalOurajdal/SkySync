@@ -1,4 +1,5 @@
 import React from "react";
+import { getIcon } from "../services/WeatherServices";
 
 function FiveDayForcast({ dailyForecast }) {
   const DayForcast = [];
@@ -7,8 +8,8 @@ function FiveDayForcast({ dailyForecast }) {
       day: dailyForecast[day].dayName,
       icon: (
         <img
-          src={`https://openweathermap.org/img/wn/${dailyForecast[day].icon}@2x.png`}
-          className="w-16"
+          src={getIcon(dailyForecast[day].icon) }
+          className="w-12"
         />
       ),
       statu: dailyForecast[day].description,
@@ -18,7 +19,7 @@ function FiveDayForcast({ dailyForecast }) {
   }
 
   return (
-    <div className="bg-white bg-opacity-50  rounded-lg ml-2 mt-14 p-4 flex-grow">
+    <div className="bg-white bg-opacity-80  rounded-lg ml-2 p-4 flex-grow">
       <p className="font-bold uppercase text-xs text-gray-700">
         7-Day forecast
       </p>

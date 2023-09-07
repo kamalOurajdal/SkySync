@@ -10,7 +10,11 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import L from "leaflet";
-import { formatCurrentWeather, getWeatherData } from "../services/WeatherServices";
+import {
+  formatCurrentWeather,
+  getIcon,
+  getWeatherData,
+} from "../services/WeatherServices";
 import { render } from "react-dom";
 import { createRoot } from "react-dom/client";
 import MapWeatherPanel from "../components/MapWeatherPanel";
@@ -27,8 +31,7 @@ const Map = () => {
   };
 
   const [weatherData, setWeatherData] = useState(null);
-  const [popup, setPopup] = useState(null)
-
+  const [popup, setPopup] = useState(null);
 
   useEffect(() => {
     const fetchWeather = async (lat, lng) => {
@@ -36,13 +39,14 @@ const Map = () => {
         lat: lat,
         lon: lng,
         units: "metric",
-      }).then(formatCurrentWeather).then((data) => setWeatherData(data.currentWeather));
+      })
+        .then(formatCurrentWeather)
+        .then((data) => setWeatherData(data.currentWeather));
       console.log("fetch weather");
     };
     if (location) {
-      fetchWeather(location.lat, location.lng)
+      fetchWeather(location.lat, location.lng);
     }
-    
   }, [location]);
 
   function LocationMarker({ weatherData }) {
@@ -55,25 +59,20 @@ const Map = () => {
     });
     console.log("locationMarher runed");
 
-    return (location === null || weatherData ===null) ? null : (
+    return location === null || weatherData === null ? null : (
       <Popup position={location}>
-        <div className="w-full h-fit flex flex-col space-y-0 justify-center px-6">
-          <span className="font-bold text-lg  mx-auto">{weatherData.name}</span>
-          <div className="flex items-center justify-between">
-          <img
-              src={`http://openweathermap.org/img/wn/${weatherData.icon}@4x.png`}
-              alt=""
-              className="w-16"
-            />
+        <div className="w-36 h-fit flex flex-col  justify-center px-4 mb-1  ">
+          <span className="font-bold text-base text-center">{weatherData.name}</span>
+          <div className="h-10 py-2 flex items-center justify-between ">
+            <img src={getIcon(weatherData.icon)} alt="" className="h-10" />
             <p className="text-xl font-bold">
-              {Math.round(weatherData.temp) + "°C"}
+              {Math.round(weatherData.temp) + "°"}
             </p>
           </div>
         </div>
       </Popup>
     );
   }
-  // console.log("location 1 :" + JSON.stringify(location, null, 2));
 
   return (
     <div className="w-full ml-2">
@@ -96,9 +95,9 @@ const Map = () => {
 
           <LocationMarker weatherData={weatherData} />
         </MapContainer>
-        <div className="h-full">
+        {weatherData && <div className={`h-full w-96 `}>
           <MapWeatherPanel weatherData={weatherData} />
-        </div>
+        </div>}
       </div>
     </div>
   );

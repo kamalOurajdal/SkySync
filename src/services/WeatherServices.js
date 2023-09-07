@@ -186,6 +186,9 @@ const formatToLocalTime = (
 ) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
 
 const getIcon =  (iconName) =>{
+  if(iconName.endsWith('n')){
+    iconName = iconName.slice(0,-1) + 'd'
+  }
   const iconImage = require(`./../media/icons/weather_icon/${iconName}.png`)
   return iconImage
 }
