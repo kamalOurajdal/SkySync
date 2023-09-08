@@ -20,7 +20,7 @@ function TodayBriefWeather({ currentWeather }) {
   );
 
   return (
-    <div className="mt-3">
+    <div className="mt-2">
       <div className="flex justify-between items-start ">
         <div>
           <p className="leading-normal">

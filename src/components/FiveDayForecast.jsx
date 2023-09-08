@@ -34,7 +34,7 @@ function FiveDayForcast({ dailyForecast }) {
               {statu}
             </p>
             <p className="text-sm">
-              <span className="font-bold">{DFrom}</span> / {DTo}
+              <span className="font-bold">{DFrom}°</span> / {DTo}°
             </p>
           </div>
         ))}

@@ -32,7 +32,7 @@ function LeftMenu() {
           <button key={item.id} className="py-2 w-full px-1 my-2 mt-6 rounded-lg hover:bg-white hover:shadow-md ">
             <Link
               to={item.title === "weather" ? "" : item.title}
-              className="h-full w-full flex flex-col items-center justify-center"
+              className="h-full w-full flex flex-col items-center justify-center font-semibold"
             >
               {item.icon}
               {item.title}

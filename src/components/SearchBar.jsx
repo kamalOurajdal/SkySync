@@ -68,7 +68,7 @@ function SearchBar({ onSearchChange, setLocation }) {
   };
 
   return (
-    <div className="flex justify-between flex-row-reverse items-center w-100">
+    <div className="mb-2 flex justify-between flex-row-reverse items-center w-100">
       <div>
         <UilMapMarker
           onClick={getLocation}

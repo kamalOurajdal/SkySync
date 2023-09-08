@@ -71,7 +71,7 @@ const Map = () => {
         <div
           className={`w-${
             weatherData ? "100" : "full"
-          } transition-width duration-500 ease-in-out h-full rounded-xl mt-4 mr-2`}
+          } transition-width duration-500 ease-in-out h-full rounded-xl mt-2 mr-2`}
         >
           <MapContainer
             center={[31.61, -7.61]}

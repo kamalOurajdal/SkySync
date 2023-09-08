@@ -21,7 +21,7 @@ function TodayWeatherDetails({ currentWeather }) {
   const sunriseTime = formatToLocalTime(sunrise, timezone / 60, "HH:mm ");
 
   return (
-    <div className=" mt-4 flex justify-between  h-60">
+    <div className=" mt-3 flex justify-between  h-60">
       <div className=" flex flex-col justify-between ">
         <WeatherWidget
           siz
