@@ -19,7 +19,7 @@ function FiveDayForcast({ dailyForecast }) {
   }
 
   return (
-    <div className="bg-white bg-opacity-80  rounded-lg ml-2 p-4 flex-grow">
+    <div className="bg-white bg-opacity-80  rounded-lg p-4 flex-grow">
       <p className="font-bold uppercase text-xs text-gray-700">
         7-Day forecast
       </p>

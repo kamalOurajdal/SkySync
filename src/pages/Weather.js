@@ -7,14 +7,15 @@ import FiveDayForcast from "../components/FiveDayForecast";
 import getFormattedWeatherData, {
   formatToLocalTime,
 } from "./../services/WeatherServices";
-import loading_svg from "../media/icons/weather_icon/loading.svg";
+import loading_svg from "../assets/icons/weather_icon/loading.svg";
 import { useParams } from "react-router-dom";
 
 function Weather() {
   const [weather, setWeather] = useState({});
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
   const { lat, lon } = useParams();
+
   useEffect(() => {
     if (lat && lon) {
       setLocation({ lat: lat, lng: lon });
@@ -50,7 +51,7 @@ function Weather() {
   }, [SearchValue, location]);
 
   return (
-    <div className="flex flex-col w-full h-full ml-2">
+    <div className="flex flex-col w-full h-full ml-2 pb-2">
       <SearchBar
         onSearchChange={handleSearchChange}
         setLocation={handleLocation}
@@ -60,10 +61,14 @@ function Weather() {
           <img src={loading_svg} alt="Loading" className="w-20" />
         </div>
       ) : (
-        <div className="flex h-full w-full pb-10  ">
-          <div className="w-100 pr-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 ">
+        <div className="flex h-full w-full pb-10 gap-2">
+          <div className=" pr-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 ">
             <TodayBriefWeather currentWeather={weather.currentWeather} />
             <TodayForecast todayForecast={weather.todayForecast} />
+            <div className="lg:hidden">
+              <FiveDayForcast dailyForecast={weather.dailyForecast}/>
+            </div>
+
             <div className="flex flex-col items-center bg-white bg-opacity-80  rounded-xl mt-3 p-4 w-full">
               <h3 className="font-bold text-lg">Don't miss the sunset</h3>
               <p className="font-medium">

@@ -1,25 +1,18 @@
 import { DateTime } from "luxon";
 import { WEATHER_API_KEY } from "../components/Constant";
-import React from "react";
-//import all wheather icon like 01d, 02d 03d ...
 
-
-// API key and base URL for OpenWeatherMap API
 const WEATHER_API = WEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
 const getWeatherData = (infoType, searchParams) => {
   const url = new URL(BASE_URL + "/" + infoType);
-  // Add search parameters and API key to the URL
   url.search = new URLSearchParams({ ...searchParams, appid: WEATHER_API });
 
   return fetch(url).then((res) => res.json());
 };
 
-// Function to format current weather data
 const formatCurrentWeather = (data) => {
 
-    // Extract relevant data from the API response
   const {
     coord: { lat, lon },
     main: { temp, feels_like, temp_min, temp_max, humidity, pressure },
@@ -190,7 +183,7 @@ const getIcon =  (iconName) =>{
   if(iconName.endsWith('n')){
     iconName = iconName.slice(0,-1) + 'd'
   }
-  const iconImage = require(`./../media/icons/weather_icon/${iconName}.png`)
+  const iconImage = require(`./../assets/icons/weather_icon/${iconName}.png`)
   return iconImage
 }
 
