@@ -67,11 +67,11 @@ const Map = () => {
         setLocation={handleLocation}
       />
 
-      <div className="w-full h-full mr-4 pb-14 flex">
+      <div className="w-full h-full mr-4 pb-14 flex gap-2 mt-2">
         <div
           className={`w-${
-            weatherData ? "100" : "full"
-          } transition-width duration-500 ease-in-out h-full rounded-xl mt-2 mr-2`}
+            weatherData ? "72" : "full"
+          } transition-width duration-500 ease-in-out h-full rounded-xl flex-1`}
         >
           <MapContainer
             center={[31.61, -7.61]}
@@ -88,11 +88,14 @@ const Map = () => {
           </MapContainer>
         </div>
 
-        {weatherData && (
+ {/*       {weatherData && (
           <div className={`  ${weatherData ? "flex-grow" : "w-0"}  h-full  `}>
             <MapWeatherPanel weatherData={weatherData} />
           </div>
-        )}
+        )}*/}
+          <div className={`  ${weatherData ? "w-64" : "hidden"}  h-full  `}>
+            <MapWeatherPanel weatherData={weatherData} />
+          </div>
       </div>
     </div>
   );

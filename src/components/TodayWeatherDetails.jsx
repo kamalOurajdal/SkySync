@@ -1,10 +1,10 @@
 import React from "react";
 import WeatherWidget from "./WeatherWidget";
-import humidity_icon from "./../media/icons/humidity_icon.png";
-import wind_icon from "./../media/icons/wind_icon.png";
-import sunset_icon from "./../media/icons/sunset_icon.png";
-import sunrise_icon from "./../media/icons/sunrise_icon.png";
-import pressure_icon from "./../media/icons/pressure_icon2.png";
+import humidity_icon from "../assets/icons/humidity_icon.png";
+import wind_icon from "../assets/icons/wind_icon.png";
+import sunset_icon from "../assets/icons/sunset_icon.png";
+import sunrise_icon from "../assets/icons/sunrise_icon.png";
+import pressure_icon from "../assets/icons/pressure_icon2.png";
 import { formatToLocalTime } from "../services/WeatherServices";
 
 function TodayWeatherDetails({ currentWeather }) {
@@ -21,25 +21,22 @@ function TodayWeatherDetails({ currentWeather }) {
   const sunriseTime = formatToLocalTime(sunrise, timezone / 60, "HH:mm ");
 
   return (
-    <div className=" mt-3 flex justify-between  h-60">
-      <div className=" flex flex-col justify-between ">
+    <div className=" mt-3 grid grid-cols-2 gap-2">
         <WeatherWidget
           siz
           info={{
-            title: "humidity",
+            title: "Humidity",
             unit: "%",
             data: humidity,
             icon: humidity_icon,
           }}
         />
         <WeatherWidget
-          info={{ title: "wind", unit: "m/s", data: speed, icon: wind_icon }}
+          info={{ title: "Wind", unit: "m/s", data: speed, icon: wind_icon }}
         />
-      </div>
-      <div className=" flex flex-col justify-between ">
         <WeatherWidget
           info={{
-            title: "pressure",
+            title: "Pressure",
             unit: "hPa",
             data: pressure,
             icon: pressure_icon,
@@ -53,7 +50,6 @@ function TodayWeatherDetails({ currentWeather }) {
             sunriseIcon: sunrise_icon,
           }}
         />
-      </div>
     </div>
   );
 }
