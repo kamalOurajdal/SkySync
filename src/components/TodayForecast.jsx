@@ -1,5 +1,4 @@
 import React from "react";
-import LineChart from "./LineChart";
 import { getIcon } from "../services/WeatherServices";
 
 function TodayForecast({ todayForecast }) {
@@ -28,10 +27,10 @@ function TodayForecast({ todayForecast }) {
       </p>
       <hr className="border-2 border-gray-300"/>
 
-      <div className="flex justify-between w-full mt-4 gap-4">
+      <div className="flex justify-between w-full mt-4 gap-5">
         {timeSlots.map(({ time, temp, icon }, index) => (
           <div
-            key={time}
+            key={index}
             className={`text-sm text-gray-600 font-semibold flex flex-col items-center w-full justify-between gap-y-4`}
           >
             <p className="text-sm">{time}</p>
