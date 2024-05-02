@@ -51,7 +51,7 @@ function Weather() {
   }, [SearchValue, location]);
 
   return (
-    <div className="flex flex-col w-full h-full ml-2 pb-2">
+    <div className="flex flex-col w-full h-full pb-2">
       <SearchBar
         onSearchChange={handleSearchChange}
         setLocation={handleLocation}

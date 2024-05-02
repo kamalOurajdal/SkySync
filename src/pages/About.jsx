@@ -27,12 +27,11 @@ function Settings() {
     ]
 
   return (
-    <div className="mx-2 px-4 flex flex-col justify-center bg-white bg-opacity-80 rounded-xl items-center">
-      <h1 className="font-bold text-center text-xl ">About Our Weather App</h1>
+    <div className="px-4 flex flex-col justify-center bg-white bg-opacity-80 rounded-xl items-center">
+      <h1 className="font-bold text-center text-xl ">About the App</h1>
       <p className=" text-center mt-7  font-medium text-gray-700">
-        This app is designed to provide the most accurate weather information in
-        the most efficient way possible. It is crafted to be as simple as
-        possible, ensuring access to the weather information needed
+        This app is designed to provide the most accurate weather information.
+          It is crafted to be as simple as possible, ensuring access to the weather information needed
       </p>
       <h1 className=" font-bold text-center mt-5 text-gray-700">
         Technologies:

@@ -61,13 +61,13 @@ const Map = () => {
   }
 
   return (
-    <div className="w-full ml-2">
+    <div className="w-full">
       <SearchBar
         onSearchChange={handleSearchChange}
         setLocation={handleLocation}
       />
 
-      <div className="w-full h-full mr-4 pb-14 flex gap-2 mt-2">
+      <div className="w-full h-full mr-4 pb-12 flex gap-2 mt-2">
         <div
           className={`w-${
             weatherData ? "72" : "full"
