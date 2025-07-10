@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from "react";
 import {Loader2, Search, MapPin} from "lucide-react";
+import {USERNAME} from "./Constant";
 
 const SearchBar = ({ onSearchChange, setLocation }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -38,13 +39,19 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
     try {
       // Mock API call - replace with actual implementation
       await new Promise(resolve => setTimeout(resolve, 300));
-      const mockSuggestions = [
-        { name: "New York", countryName: "United States", region: "New York", coord: { lat: 40.7128, lng: -74.0060 } },
-        { name: "London", countryName: "United Kingdom", region: "England", coord: { lat: 51.5074, lng: -0.1278 } },
-        { name: "Tokyo", countryName: "Japan", region: "Tokyo", coord: { lat: 35.6762, lng: 139.6503 } },
-      ].filter(city => city.name.toLowerCase().includes(query.toLowerCase()));
-
-      setSuggestions(mockSuggestions);
+      const response = await fetch(
+          `http://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=${USERNAME}`
+      );
+      const data = await response.json();
+      const citySuggestions = data.geonames.map((city) => {
+        return {
+          name: city.name,
+          countryName: city.countryName,
+          region: city.adminName1,
+          coord: { lat: city.lat, lng: city.lng },
+        };
+      });
+      setSuggestions(citySuggestions);
     } catch (error) {
       console.error("Search error:", error);
       setSuggestions([]);
@@ -67,11 +74,11 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
   }, [setLocation]);
 
   return (
-      <div className="relative mb-6">
-        <div className="flex items-center gap-4">
+      <div className="relative">
+        <div className="flex items-center gap-4 px-4">
           <div className="relative flex-1">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute z-20 left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                   type="text"
                   placeholder="Search for a city..."
