@@ -1,9 +1,18 @@
 import React from "react";
 import { formatToLocalTime, getIcon } from "../services/WeatherServices";
-import { UilMapMarker } from "@iconscout/react-unicons";
-import { Link } from "react-router-dom";
+import {Loader2, MapPin, Droplets, Wind, Sunrise, Sunset} from "lucide-react";
 
-function MapWeatherPanel({ weatherData }) {
+const MapWeatherPanel = ({ weatherData }) => {
+  if (!weatherData) {
+    return (
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 h-full">
+          <div className="flex items-center justify-center h-full">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+          </div>
+        </div>
+    );
+  }
+
   const {
     feels_like,
     temp_min,
@@ -20,79 +29,94 @@ function MapWeatherPanel({ weatherData }) {
     timezone,
     lat,
     lon,
-  } = weatherData ? weatherData : "";
-  const localeTime = formatToLocalTime(Number(dt), Number(timezone) / 60).split(
-    "|"
-  );
+  } = weatherData;
+
+  const localeTime = formatToLocalTime(Number(dt), Number(timezone) / 60).split("|");
   const sunsetTime = formatToLocalTime(Number(sunset), timezone / 60, "HH:mm");
-  const sunriseTime = formatToLocalTime(
-    Number(sunrise),
-    timezone / 60,
-    "HH:mm "
-  );
+  const sunriseTime = formatToLocalTime(Number(sunrise), timezone / 60, "HH:mm");
 
   return (
-    <div className=" p-2 bg-white bg-opacity-80  rounded-xl  h-full ">
-      {weatherData && (
-        <>
-          <p className="text-4xl  text-center text-gray-500 font">{localeTime[1]}</p>
-          <p className="text-sm font-medium text-center text-gray-500">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 h-full">
+        <div className="text-center mb-6">
+          <div className="text-3xl font-light text-gray-600 mb-1">
+            {localeTime[1]}
+          </div>
+          <div className="text-sm text-gray-500 font-medium">
             {localeTime[0]}
-          </p>
-          <p className="mt-2 flex items-center justify-center font-bold ">
-            {name} <UilMapMarker size={20} className="ml-1"/>
-          </p>
-          <div className="mt-2 flex justify-around">
-            <div className="text-center">
-              <p className="text-4xl font-bold ">
-                {Math.round(temp)}°
-              </p>
-              <p className="text-xs font-semibold text-gray-600">{main}</p>
-            </div>
-            <img className="h-10" src={getIcon(icon)} />
           </div>
-          <div className="text-center font-medium text-gray-800 mt-2">
-            <p className="text-xs">
-              {Math.round(temp_max)}°/{Math.round(temp_min)}° feels like{" "}
-              <span className="font-bold">{Math.round(feels_like)}°</span>
-            </p>
-            <div className=" mt-2 w-full">
-              <div className="flex mt-2  py-2 gap-2">
-                <div className="bg-gray-100 px-4 py-1.5 rounded-md w-44">
-                  <h1 className="font-semibold text-sm text-gray-500 ">humidity</h1>
-                  <p className="font-bold text-lg text-gray-600 ">
-                    {humidity} %
-                  </p>
-                </div>
-                <div className="bg-gray-100 px-4 py-1.5 rounded-md w-44">
-                  <h1 className="font-semibold text-sm text-gray-500">wind</h1>
-                  <p className="font-bold text-lg text-gray-600 ">{speed} m/s</p>
-                </div>
-              </div>
+        </div>
 
-              <div className="flex justify-around bg-gray-100 rounded-md mt-2  py-2 ">
-                <div>
-                  <h1 className="font-semibold text-sm text-yellow-400">Sunset</h1>
-                  <p className="font-bold text-lg text-gray-600">
-                    {sunsetTime}
-                  </p>
-                </div>
-                <div>
-                  <h1 className="font-semibold text-sm text-orange-500">Sunrise</h1>
-                  <p className="font-bold text-lg text-gray-600">
-                    {sunriseTime}
-                  </p>
-                </div>
-              </div>
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <h2 className="text-lg font-bold text-gray-800">{name}</h2>
+          <MapPin className="w-5 h-5 text-red-500" />
+        </div>
+
+        <div className="flex items-center justify-center gap-6 mb-6">
+          <div className="text-center">
+            <div className="text-5xl font-bold text-gray-800 mb-1">
+              {Math.round(temp)}°
             </div>
-            <button className=" w-full rounded-md py-1  bg-blue-500 text-lg text-white mt-4 hover:bg-blue-600 hover:shadow-md transition duration-500 ease-in-out">
-              <Link to={`/${lat}/${lon}`}>More Details</Link>
-            </button>
+            <div className="text-sm font-medium text-gray-600 capitalize">
+              {main}
+            </div>
           </div>
-        </>
-      )}
-    </div>
+          <img
+              src={getIcon(icon)}
+              alt={main}
+              className="w-16 h-16"
+          />
+        </div>
+
+        <div className="text-center mb-6">
+          <div className="text-sm text-gray-600">
+            {Math.round(temp_max)}°/{Math.round(temp_min)}° feels like{" "}
+            <span className="font-bold">{Math.round(feels_like)}°</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="bg-blue-50 rounded-xl p-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Droplets className="w-4 h-4 text-blue-500" />
+              <span className="text-sm font-medium text-gray-600">Humidity</span>
+            </div>
+            <div className="text-lg font-bold text-gray-800">{humidity}%</div>
+          </div>
+
+          <div className="bg-green-50 rounded-xl p-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Wind className="w-4 h-4 text-green-500" />
+              <span className="text-sm font-medium text-gray-600">Wind</span>
+            </div>
+            <div className="text-lg font-bold text-gray-800">{speed} m/s</div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl p-4 mb-6">
+          <div className="flex justify-between items-center">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Sunrise className="w-4 h-4 text-orange-500" />
+                <span className="text-sm font-medium text-orange-600">Sunrise</span>
+              </div>
+              <div className="text-lg font-bold text-gray-800">{sunriseTime}</div>
+            </div>
+
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Sunset className="w-4 h-4 text-yellow-500" />
+                <span className="text-sm font-medium text-yellow-600">Sunset</span>
+              </div>
+              <div className="text-lg font-bold text-gray-800">{sunsetTime}</div>
+            </div>
+          </div>
+        </div>
+
+        <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+          View Details
+        </button>
+      </div>
   );
-}
+};
 
 export default MapWeatherPanel;

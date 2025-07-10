@@ -3,7 +3,7 @@ import TodayBriefWeather from "../components/TodayBriefWeather";
 import SearchBar from "../components/SearchBar";
 import TodayForecast from "../components/TodayForecast";
 import TodayWeatherDetails from "../components/TodayWeatherDetails";
-import FiveDayForcast from "../components/FiveDayForecast";
+import FiveDayForecast from "../components/FiveDayForecast";
 import getFormattedWeatherData, {
   formatToLocalTime,
 } from "./../services/WeatherServices";
@@ -66,7 +66,7 @@ function Weather() {
             <TodayBriefWeather currentWeather={weather.currentWeather} />
             <TodayForecast todayForecast={weather.todayForecast} />
             <div className="lg:hidden">
-              <FiveDayForcast dailyForecast={weather.dailyForecast}/>
+              <FiveDayForecast dailyForecast={weather.dailyForecast}/>
             </div>
 
             <div className="flex flex-col items-center bg-white bg-opacity-80  rounded-xl mt-3 p-4 w-full">
@@ -84,7 +84,7 @@ function Weather() {
             <TodayWeatherDetails currentWeather={weather.currentWeather} />
           </div>
 
-          <FiveDayForcast dailyForecast={weather.dailyForecast} />
+          <FiveDayForecast dailyForecast={weather.dailyForecast} />
         </div>
       )}
     </div>

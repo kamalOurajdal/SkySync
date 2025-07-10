@@ -1,8 +1,10 @@
 import React from "react";
-import { UilMapMarker } from "@iconscout/react-unicons";
 import { formatToLocalTime, getIcon } from "../services/WeatherServices";
+import {MapPin} from "lucide-react"
 
-function TodayBriefWeather({ currentWeather }) {
+const TodayBriefWeather = ({ currentWeather }) => {
+  if (!currentWeather) return null;
+
   const {
     feels_like,
     temp_min,
@@ -15,42 +17,48 @@ function TodayBriefWeather({ currentWeather }) {
     temp,
     timezone,
   } = currentWeather;
-  const localeTime = formatToLocalTime(Number(dt), Number(timezone) / 60).split(
-    "|"
-  );
+
+  const localeTime = formatToLocalTime(Number(dt), Number(timezone) / 60).split("|");
 
   return (
-    <div className="mt-2">
-      <div className="flex justify-between items-start ">
-        <div>
-          <p className="leading-normal">
-            <p className="font-bold text-6xl  text-gray-700">
+      <div className="bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 text-white rounded-2xl p-8 shadow-xl mb-6">
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <div className="text-7xl font-bold mb-2">
               {Math.round(temp)}°
-            </p>
-            <p className="text-gray-600 text-md font-medium">{main} </p>
-          </p>
-          <p className="leading-7 mt-2">
-            <p className="font-bold text-xl flex items-center text-gray-700 ">
-              {name}, {country}{" "}
-              <UilMapMarker size={20} className="ml-2 text-red-500" />
-            </p>
+            </div>
+            <div className="text-xl font-medium opacity-90 capitalize mb-4">
+              {main}
+            </div>
 
-            <p className="text-gray-600 text-md font-medium">
-              {Math.round(temp_max)}° / {Math.round(temp_min)}° feels like{" "}
-              {Math.round(feels_like)}°
-            </p>
-          </p>
+            <div className="flex items-center gap-2 mb-2">
+              <h2 className="text-2xl font-bold">{name}, {country}</h2>
+              <MapPin className="w-6 h-6 text-red-300" />
+            </div>
+
+            <div className="text-lg opacity-90">
+              {Math.round(temp_max)}° / {Math.round(temp_min)}° feels like {Math.round(feels_like)}°
+            </div>
+          </div>
+
+          <div className="text-center">
+            <div className="text-4xl font-light mb-2">
+              {localeTime[1]}
+            </div>
+            <div className="text-sm font-medium opacity-90">
+              {localeTime[0]}
+            </div>
+          </div>
+
+          <img
+              src={getIcon(icon)}
+              alt={main}
+              className="w-32 h-32 ml-6"
+          />
         </div>
-        <p className="text-center ">
-          <p className="text-4xl flex justify-center items-end text-gray-500">
-            {localeTime[1]}
-          </p>
-          <p className="text-sm font-bold  text-gray-500">{localeTime[0]}</p>
-        </p>
-        <img className="w-36 mr-2  mt-3" src={getIcon(icon)} />
       </div>
-    </div>
   );
-}
+};
+
 
 export default TodayBriefWeather;

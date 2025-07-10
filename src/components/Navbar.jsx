@@ -1,52 +1,50 @@
-import React from "react";
+import React, {useState} from "react";
 import "../App.css";
-import { UilCloudSunTear } from "@iconscout/react-unicons";
-import { UilMap } from "@iconscout/react-unicons";
-import { UilSetting } from "@iconscout/react-unicons";
+import {Cloud} from "lucide-react";
+import {Settings} from "luxon";
 
-import {Link, NavLink, Outlet} from "react-router-dom";
+const Navbar = () => {
+  const [activeTab, setActiveTab] = useState("weather");
 
-function Navbar() {
   const menuItems = [
-    {
-      id: 1,
-      title: "weather",
-      value: "Weather",
-      icon: <UilCloudSunTear />,
-    },
-    {
-      id: 2,
-      title: "map",
-      value: "Map",
-      icon: <UilMap />,
-    },
-    {
-      id: 3,
-      title: "about",
-      value: "About",
-      icon: <UilSetting />,
-    },
+    { id: 1, title: "weather", value: "Weather", icon: Cloud },
+    { id: 2, title: "map", value: "Map", icon: Map },
+    { id: 3, title: "about", value: "About", icon: Settings },
   ];
 
   return (
-    <div className="flex h-full">
-      <div className="bg-white bg-opacity-80 flex flex-col rounded-xl w-fit mx-2 px-1 pt-8 gap-4">
-        {menuItems.map((item) => (
-            <NavLink
-                key={item.id}
-              to={item.title === "weather" ? "" : item.title}
-                className={({isActive}) => isActive ? "w-full text-sm text-white flex flex-col items-center justify-center font-semibold rounded-md  bg-blue-500 p-1" :
-                    "w-full text-sm flex flex-col items-center justify-center font-semibold  p-1 rounded-md hover:bg-gray-200"
-                }
-            >
-              {item.icon}
-              {item.value}
-            </NavLink>
-        ))}
+      <div className="flex h-full">
+        <nav className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-4 mr-6">
+          <div className="flex flex-col gap-2">
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.title;
+
+              return (
+                  <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.title)}
+                      className={`
+                  flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-300
+                  ${isActive
+                          ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg'
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+                      }
+                `}
+                  >
+                    <Icon className="w-6 h-6 mb-2" />
+                    <span className="text-sm font-medium">{item.value}</span>
+                  </button>
+              );
+            })}
+          </div>
+        </nav>
+
+        <div className="flex-1">
+          {/* Content would go here */}
+        </div>
       </div>
-      <Outlet />
-    </div>
   );
-}
+};
 
 export default Navbar;
