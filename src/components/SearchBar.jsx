@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import {Loader2, Search, MapPin} from "lucide-react";
-import {USERNAME} from "./Constant";
+import {USERNAME} from "../Constant";
 
 const SearchBar = ({ onSearchChange, setLocation }) => {
   const [searchValue, setSearchValue] = useState("");

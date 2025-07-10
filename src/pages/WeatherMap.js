@@ -20,13 +20,13 @@ const Map = () => {
   };
 
   const handleLocation = (value) => {
-    console.log(value)
     setLocation(value);
   };
 
   useEffect(() => {
     setWeatherData(null);
     const fetchWeather = async (lat, lng) => {
+      if (!!lat || !!lng) return;
       await getWeatherData("weather", {
         lat: lat,
         lon: lng,
@@ -43,12 +43,11 @@ const Map = () => {
   function LocationMarker({ weatherData }) {
     const map = useMapEvents({
       click(e) {
-        console.log(e.latlng)
         setLocation(e.latlng);
       },
     });
 
-    return location === null || weatherData === null ? null : (
+    return (!!location?.lng || !!location?.lat) || !!weatherData  && (
         <Popup closeButton={false}  position={location}>
           <div className="w-48 bg-white rounded-lg border-0 overflow-hidden">
               <h3 className="font-semibold text-lg text-center truncate border-b pb-1">

@@ -19,13 +19,9 @@ import {
     Linkedin
 } from "lucide-react";
 
-/**
- * Lightweight "About" page for the WeatherApp
- * Adds GitHub & LinkedIn links in the footer.
- */
 export default function WeatherAbout() {
     const features = [
-        { icon: <Zap className="w-6 h-6 text-yellow-500" />, title: "Real‑time", desc: "Fresh data every 10 min" },
+        { icon: <Zap className="w-6 h-6 text-yellow-500" />, title: "Real‑time", desc: "Fresh data every 10 min" },
         { icon: <Shield className="w-6 h-6 text-green-500" />, title: "Accurate", desc: "Pro‑grade stations" },
         { icon: <Target className="w-6 h-6 text-red-500" />, title: "Geo precise", desc: "GPS‑level targeting" },
         { icon: <Sparkles className="w-6 h-6 text-purple-500" />, title: "Modern UI", desc: "Clean & intuitive" },
@@ -49,10 +45,10 @@ export default function WeatherAbout() {
                     <Cloud className="w-14 h-14 text-white" />
                 </div>
                 <h1 className="text-4xl font-extrabold text-slate-800 mb-4">
-                    About <span className="text-transparent bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text">WeatherApp</span>
+                    About <span className="text-transparent bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text">SkySync</span>
                 </h1>
                 <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-                    A lightweight, accurate & beautifully simple weather experience.
+                    A lightweight, accurate & beautifully simple weather experience.
                 </p>
             </header>
 
