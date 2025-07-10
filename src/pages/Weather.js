@@ -61,7 +61,7 @@ function Weather() {
           <img src={loading_svg} alt="Loading" className="w-20" />
         </div>
       ) : (
-        <div className="flex h-full w-full pb-10 gap-2">
+        <div className="flex flex-col lg:flex-row h-full w-full pb-10 gap-2">
           <div className=" pr-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 ">
             <TodayBriefWeather currentWeather={weather.currentWeather} />
             <TodayForecast todayForecast={weather.todayForecast} />
@@ -84,7 +84,9 @@ function Weather() {
             <TodayWeatherDetails currentWeather={weather.currentWeather} />
           </div>
 
-          <FiveDayForcast dailyForecast={weather.dailyForecast} />
+          <div className="hidden lg:block">
+            <FiveDayForcast dailyForecast={weather.dailyForecast} />
+          </div>
         </div>
       )}
     </div>

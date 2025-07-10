@@ -11,7 +11,7 @@ function App() {
   
   return (
     <div
-      className="cursor-default mx-auto h-[500px] lg:max-w-[900px] mt-4 py-4 px-2 shadow-xl shadow-gray-400  rounded-lg  bg-cover bg-center "
+      className="cursor-default mx-auto min-h-screen w-full sm:max-w-[700px] lg:max-w-[900px] mt-4 py-4 px-2 shadow-xl shadow-gray-400 rounded-lg bg-cover bg-center flex flex-col"
       style={{ backgroundImage: `url(${weather_bg}` }}
     >
       <BrowserRouter>

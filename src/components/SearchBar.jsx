@@ -75,7 +75,7 @@ function SearchBar({ onSearchChange, setLocation }) {
         size={35}
         className="text-white hover:cursor-pointer "
       />
-      <div className="w-full mr-4 ">
+      <div className="w-full mr-4 relative">
         <input
           type="text"
           placeholder="Search for a city..."
@@ -86,10 +86,7 @@ function SearchBar({ onSearchChange, setLocation }) {
         />
         {SearchedValue && showSuggestion && (
           <div
-            className="absolute bg-gray-50 rounded-lg w-150 
-           focus:outline-none  shadow-lg shadow-gray-500 h-fit 
-           max-h-48 overflow-auto scrollbar-thin scrollbar-thumb-gray-300
-           z-1000"
+            className="absolute mt-1 bg-gray-50 rounded-lg w-full focus:outline-none shadow-lg shadow-gray-500 h-fit max-h-48 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 z-1000"
           >
             {suggestions.map(({ name, countryName, region, coord }, index) => (
               <button
