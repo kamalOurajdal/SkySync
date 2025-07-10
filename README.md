@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Configuration
+
+Create a `.env` file at the project root and provide your API credentials:
+
+```
+REACT_APP_WEATHER_API_KEY=YOUR_OPENWEATHER_KEY
+REACT_APP_GEONAMES_USERNAME=YOUR_GEONAMES_USERNAME
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

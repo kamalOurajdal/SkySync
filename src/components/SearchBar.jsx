@@ -39,7 +39,7 @@ function SearchBar({ onSearchChange, setLocation }) {
 
     try {
       const response = await fetch(
-        `http://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=${USERNAME}`
+        `https://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=${USERNAME}`
       );
 
       if (!response.ok) {
