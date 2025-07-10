@@ -56,8 +56,6 @@ const Map = () => {
     useMapEvents({
       click(e) {
         const newLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
-        console.log("Map clicked at:", newLocation);
-
         // Set both the clicked location for popup and trigger weather fetch
         setClickedLocation(newLocation);
         setLocation(newLocation);
@@ -128,7 +126,7 @@ const Map = () => {
         </div>
 
         {/* Main content area */}
-        <div className="flex flex-1 overflow-hidden relative z-10 rounded-xl">
+        <div className="flex flex-1 overflow-hidden relative z-10 rounded-xl mx-4">
           {/* Map container - responsive */}
           <div className="flex-col transition-all duration-300 flex flex-1 rounded-xl">
             <div className="flex-1 relative">
