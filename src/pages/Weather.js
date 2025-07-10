@@ -124,15 +124,14 @@ function Weather() {
 
   return (
       <div className="min-h-screen">
-        <div className="sticky top-0 z-20 py-4 mb-6">
+        <div className="sticky top-0 z-20 py-4 mb-2">
+          {/* Search Bar */}
           <SearchBar
               onSearchChange={handleSearchChange}
               setLocation={handleLocation}
           />
         </div>
-        <div className="container mx-auto px-4 py-6 max-w-7xl">
-          {/* Search Bar */}
-
+        <div className="container mx-auto px-4 pt-6 pb-4 max-w-7xl">
 
           {/* Loading State */}
           {loading && <LoadingComponent/>}
@@ -143,7 +142,7 @@ function Weather() {
           {/* Main Content */}
           {!loading && !error && (
               <div className="flex flex-col gap-6">
-                <div className=" flex-grow overflow-auto space-y-6">
+                <div className=" flex-grow overflow-auto space-y-7">
                   {/* Today's Brief Weather */}
                   <div className="w-full">
                     <TodayBriefWeather
@@ -175,7 +174,7 @@ function Weather() {
                   />
 
                   {/* Weather Details */}
-                  <div className="w-full">
+                  <div className="w-full pb-4">
                     <TodayWeatherDetails currentWeather={weather.currentWeather}/>
                   </div>
                 </div>

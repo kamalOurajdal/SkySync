@@ -1,17 +1,33 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useState, useEffect, useRef} from "react";
 import {Loader2, Search, MapPin} from "lucide-react";
 import {USERNAME, WEATHER_API_KEY} from "../Constant";
 
 const SearchBar = ({ onSearchChange, setLocation }) => {
-  console.log("API Key:", WEATHER_API_KEY);
-  console.log("Username:", USERNAME);
   const [searchValue, setSearchValue] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const debounceTimerRef = useRef(null);
+
+  // Debounced search function
+  const debouncedSearch = useCallback((query) => {
+    // Clear existing timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    // Set new timer
+    debounceTimerRef.current = setTimeout(() => {
+      handleSearch(query);
+    }, 400); // 300ms delay
+  }, []);
 
   const handleKeyPress = useCallback((event) => {
     if (event.key === "Enter" && searchValue.trim()) {
+      // Clear debounce timer for immediate search on Enter
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
       onSearchChange(searchValue);
       setShowSuggestions(false);
     }
@@ -34,13 +50,12 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
   const handleSearch = useCallback(async (query) => {
     if (!query.trim()) {
       setSuggestions([]);
+      setLoading(false);
       return;
     }
 
     setLoading(true);
     try {
-      // Mock API call - replace with actual implementation
-      await new Promise(resolve => setTimeout(resolve, 300));
       const response = await fetch(
           `http://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=${USERNAME}`
       );
@@ -66,8 +81,19 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
     const value = e.target.value;
     setSearchValue(value);
     setShowSuggestions(true);
-    handleSearch(value);
-  }, [handleSearch]);
+
+    if (value.trim()) {
+      setLoading(true);
+      debouncedSearch(value);
+    } else {
+      // Clear suggestions immediately if input is empty
+      setSuggestions([]);
+      setLoading(false);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    }
+  }, [debouncedSearch]);
 
   const handleSuggestionClick = useCallback((coord) => {
     setLocation(coord);
@@ -75,12 +101,21 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
     setSearchValue("");
   }, [setLocation]);
 
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
   return (
       <div className="relative">
         <div className="flex items-center gap-4 px-4">
           <div className="relative flex-1">
             <div className="relative">
-              <Search className="absolute z-20 left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute z-20 left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"/>
               <input
                   type="text"
                   placeholder="Search for a city..."
@@ -89,37 +124,43 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
                   onKeyDown={handleKeyPress}
                   className="w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
-              {loading && (
-                  <Loader2 className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 animate-spin text-blue-500" />
+
+              {loading && searchValue.trim() && (
+                  <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                    {/* Tailwind CSS spinner */}
+                    <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"/>
+                  </div>
               )}
             </div>
-
-            {showSuggestions && searchValue && suggestions.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 max-h-60 overflow-y-auto z-50">
-                  {suggestions.map((suggestion, index) => (
-                      <button
-                          key={index}
-                          onClick={() => handleSuggestionClick(suggestion.coord)}
-                          className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0 first:rounded-t-2xl last:rounded-b-2xl"
-                      >
-                        <div className="font-semibold text-gray-800">
-                          {suggestion.name}, <span className="text-gray-500">{suggestion.countryName}</span>
-                        </div>
-                        <div className="text-sm text-gray-600">{suggestion.region}</div>
-                      </button>
-                  ))}
-                </div>
-            )}
           </div>
 
           <button
               onClick={getCurrentLocation}
               className="p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5"
           >
-            <MapPin className="w-6 h-6" />
+            <MapPin className="w-6 h-6"/>
           </button>
+          {showSuggestions && searchValue && suggestions.length > 0 && (
+              <div
+                  className="absolute top-full left-4 right-4 mt-2 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 max-h-60 overflow-y-auto z-50">
+                {suggestions.map((suggestion, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handleSuggestionClick(suggestion.coord)}
+                        className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0 first:rounded-t-2xl last:rounded-b-2xl"
+                    >
+                      <div className="font-semibold text-gray-800">
+                        {suggestion.name},{" "}
+                        <span className="text-gray-500">{suggestion.countryName}</span>
+                      </div>
+                      <div className="text-sm text-gray-600">{suggestion.region}</div>
+                    </button>
+                ))}
+              </div>
+          )}
         </div>
       </div>
+
   );
 };
 

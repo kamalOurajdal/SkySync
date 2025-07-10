@@ -77,8 +77,8 @@ export default function Navbar() {
                   className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
                   onClick={() => setIsMobileMenuOpen(false)}
               />
-              <aside className="lg:hidden fixed top-0 right-0 h-full w-80 bg-white/95 backdrop-blur-xl shadow-2xl z-50">
-                <div className="flex items-center justify-between p-6">
+              <aside className="lg:hidden fixed top-0 right-0 h-full w-60 bg-white/95 backdrop-blur-xl shadow-2xl z-50">
+                <div className="flex items-center justify-between p-4">
                   <h2 className="text-lg font-semibold">Navigation</h2>
                   <button
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -87,7 +87,7 @@ export default function Navbar() {
                     <X className="w-5 h-5 text-slate-600"/>
                   </button>
                 </div>
-                <div className="p-6 space-y-6">
+                <div className="p-4 space-y-6">
                   {menuItems.map(({id, title, to, icon: Icon}) => (
                       <NavLink
                           key={id}
@@ -95,7 +95,7 @@ export default function Navbar() {
                           end
                           onClick={() => setIsMobileMenuOpen(false)}
                           className={({isActive}) =>
-                              `flex items-center gap-4 p-4 rounded-2xl transition-all ${
+                              `flex items-center gap-4 p-3 rounded-xl transition-all ${
                                   isActive
                                       ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg"
                                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-800"
@@ -112,8 +112,8 @@ export default function Navbar() {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 overflow-auto pt-16 pb-20 lg:pt-0 lg:pb-0">
-          <div className="p-4 lg:p-8">
+        <main className="flex-1 overflow-auto pt-20 pb-12 lg:pt-0 lg:pb-0">
+          <div className="lg:p-6">
             <Outlet/>
           </div>
         </main>
