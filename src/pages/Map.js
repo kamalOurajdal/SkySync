@@ -22,6 +22,7 @@ const Map = () => {
   const [weatherData, setWeatherData] = useState(null);
 
   useEffect(() => {
+    setWeatherData(null);
     const fetchWeather = async (lat, lng) => {
       await getWeatherData("weather", {
         lat: lat,

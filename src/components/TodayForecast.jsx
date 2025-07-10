@@ -1,46 +1,52 @@
-import React from "react";
+import React, {useMemo} from "react";
 import { getIcon } from "../services/WeatherServices";
+import {Cloud} from "lucide-react";
 
-function TodayForecast({ todayForecast }) {
+const TodayForecast = ({ todayForecast = {} }) => {
+    const timeSlots = useMemo(() => {
+        return Object.entries(todayForecast).map(([key, slot]) => ({
+            id: key,
+            time: slot.hour,
+            temp: slot.temp,
+            icon: slot.icon,
+        }));
+    }, [todayForecast]);
 
+    return (
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 mb-6">
+            <h3 className="text-sm font-bold text-gray-600 uppercase tracking-wider mb-4">
+                Today's Forecast
+            </h3>
 
-  const timeSlots = [];
-
-  for (const key in todayForecast) {
-    timeSlots.push({
-      time: todayForecast[key].hour,
-      temp: todayForecast[key].temp,
-      icon: todayForecast[key].icon,
-    });
-  }
-
-  const data = [];
-  const timeW = [];
-  timeSlots.map(({ temp, time }) => {
-    data.push(temp);
-    timeW.push(time);
-  });
-  return (
-    <div className="bg-white bg-opacity-80  rounded-xl mt-5 p-4 w-full ">
-      <p className="font-bold uppercase text-xs text-gray-600 mb-2 flex flex-col">
-        Today's forecast
-      </p>
-      <hr className="border-2 border-gray-300"/>
-
-      <div className="flex justify-between w-full mt-4 gap-5">
-        {timeSlots.map(({ time, temp, icon }, index) => (
-          <div
-            key={index}
-            className={`text-sm text-gray-600 font-semibold flex flex-col items-center w-full justify-between gap-y-4`}
-          >
-            <p className="text-sm">{time}</p>
-            <img src={getIcon(icon)} className="h-7" alt={icon}/>
-            <p className="text-sm font-bold">{temp}°</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+                {timeSlots.length > 0 ? (
+                    timeSlots.map((slot) => (
+                        <div
+                            key={slot.id}
+                            className="text-center p-4 rounded-xl hover:bg-gray-50/50 transition-colors"
+                        >
+                            <div className="text-sm font-medium text-gray-600 mb-2">
+                                {slot.time}
+                            </div>
+                            <img
+                                src={getIcon(slot.icon)}
+                                alt="weather"
+                                className="w-12 h-12 mx-auto mb-2"
+                            />
+                            <div className="text-lg font-bold text-gray-800">
+                                {Math.round(slot.temp)}°
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="col-span-full text-center py-8 text-gray-500">
+                        <Cloud className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                        <p>No hourly forecast available</p>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
 
 export default TodayForecast;
