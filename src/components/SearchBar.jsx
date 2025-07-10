@@ -1,8 +1,10 @@
 import React, {useCallback, useState} from "react";
 import {Loader2, Search, MapPin} from "lucide-react";
-import {USERNAME} from "../Constant";
+import {USERNAME, WEATHER_API_KEY} from "../Constant";
 
 const SearchBar = ({ onSearchChange, setLocation }) => {
+  console.log("API Key:", WEATHER_API_KEY);
+  console.log("Username:", USERNAME);
   const [searchValue, setSearchValue] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
