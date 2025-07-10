@@ -1,51 +1,47 @@
-import React, { useState } from "react";
-import { UilMapMarker } from "@iconscout/react-unicons";
-import { USERNAME } from "./Constant";
+import React, {useCallback, useState} from "react";
+import {Loader2, Search, MapPin} from "lucide-react";
+import {USERNAME} from "./Constant";
 
-function SearchBar({ onSearchChange, setLocation }) {
-  const [SearchedValue, setSearchedValue] = useState("");
-  const [showSuggestion, setShowSuggestion] = useState(true);
+const SearchBar = ({ onSearchChange, setLocation }) => {
+  const [searchValue, setSearchValue] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  const handleKeyPress = useCallback((event) => {
+    if (event.key === "Enter" && searchValue.trim()) {
+      onSearchChange(searchValue);
+      setShowSuggestions(false);
+    }
+  }, [searchValue, onSearchChange]);
 
-  const handleKeyPress = (event) => {
-    if (onSearchChange && event.key === "Enter")
-      if (event.key === "Enter") {
-        onSearchChange(SearchedValue);
-        setShowSuggestion(false);
-      }
-  };
-
-  // get the latitude and longitude of the curent location using location pin
-  const getLocation = () => {
+  const getCurrentLocation = useCallback(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLocation({ lat: latitude, lng: longitude }); // Pass location to parent
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setLocation({ lat: latitude, lng: longitude });
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+          }
       );
-    } else {
-      console.error("Geolocation is not supported in this browser.");
     }
-  };
+  }, [setLocation]);
 
-  const handleChange = async (e) => {
-    const query = e.target.value;
-    setSearchedValue(e.target.value);
+  const handleSearch = useCallback(async (query) => {
+    if (!query.trim()) {
+      setSuggestions([]);
+      return;
+    }
 
+    setLoading(true);
     try {
+      // Mock API call - replace with actual implementation
+      await new Promise(resolve => setTimeout(resolve, 300));
       const response = await fetch(
-        `http://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=${USERNAME}`
+          `http://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=${USERNAME}`
       );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
       const data = await response.json();
       const citySuggestions = data.geonames.map((city) => {
         return {
@@ -57,58 +53,72 @@ function SearchBar({ onSearchChange, setLocation }) {
       });
       setSuggestions(citySuggestions);
     } catch (error) {
-      console.error(error);
+      console.error("Search error:", error);
+      setSuggestions([]);
+    } finally {
+      setLoading(false);
     }
-    setShowSuggestion(true);
-  };
+  }, []);
 
-  const handleClickSuggestion = (latitude, longitude) => {
-    setLocation({ lat: latitude, lng: longitude });
-    setShowSuggestion(false);
-  };
+  const handleInputChange = useCallback((e) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    setShowSuggestions(true);
+    handleSearch(value);
+  }, [handleSearch]);
+
+  const handleSuggestionClick = useCallback((coord) => {
+    setLocation(coord);
+    setShowSuggestions(false);
+    setSearchValue("");
+  }, [setLocation]);
 
   return (
-    <div className="mb-2 flex justify-between flex-row-reverse items-center w-100">
+      <div className="relative">
+        <div className="flex items-center gap-4 px-4">
+          <div className="relative flex-1">
+            <div className="relative">
+              <Search className="absolute z-20 left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                  type="text"
+                  placeholder="Search for a city..."
+                  value={searchValue}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyPress}
+                  className="w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+              />
+              {loading && (
+                  <Loader2 className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 animate-spin text-blue-500" />
+              )}
+            </div>
 
-      <UilMapMarker
-        onClick={getLocation}
-        size={35}
-        className="text-white hover:cursor-pointer "
-      />
-      <div className="w-full mr-4 ">
-        <input
-          type="text"
-          placeholder="Search for a city..."
-          className="bg-white bg-opacity-80 rounded-lg h-10 w-full pl-5 focus:outline-none"
-          value={SearchedValue}
-          onChange={handleChange}
-          onKeyDown={handleKeyPress}
-        />
-        {SearchedValue && showSuggestion && (
-          <div
-            className="absolute bg-gray-50 rounded-lg w-150 
-           focus:outline-none  shadow-lg shadow-gray-500 h-fit 
-           max-h-48 overflow-auto scrollbar-thin scrollbar-thumb-gray-300
-           z-1000"
-          >
-            {suggestions.map(({ name, countryName, region, coord }, index) => (
-              <button
-                key={index}
-                className="border-b border-gray-300 h-14 px-5 block text-left w-full hover:shadow-lg hover:bg-white "
-                onClick={() => handleClickSuggestion(coord.lat, coord.lng)}
-              >
-                <p className="font-bold">
-                  {name}, <span className="text-gray-400">{countryName}</span>
-                </p>
-
-                <span className="text-gray-600"> {region}</span>
-              </button>
-            ))}
+            {showSuggestions && searchValue && suggestions.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 max-h-60 overflow-y-auto z-50">
+                  {suggestions.map((suggestion, index) => (
+                      <button
+                          key={index}
+                          onClick={() => handleSuggestionClick(suggestion.coord)}
+                          className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0 first:rounded-t-2xl last:rounded-b-2xl"
+                      >
+                        <div className="font-semibold text-gray-800">
+                          {suggestion.name}, <span className="text-gray-500">{suggestion.countryName}</span>
+                        </div>
+                        <div className="text-sm text-gray-600">{suggestion.region}</div>
+                      </button>
+                  ))}
+                </div>
+            )}
           </div>
-        )}
+
+          <button
+              onClick={getCurrentLocation}
+              className="p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5"
+          >
+            <MapPin className="w-6 h-6" />
+          </button>
+        </div>
       </div>
-    </div>
   );
-}
+};
 
 export default SearchBar;

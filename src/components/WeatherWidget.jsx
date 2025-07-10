@@ -1,37 +1,68 @@
 import React from "react";
+import {Droplets, Gauge, Sunrise, Sunset, Wind, AlertCircle} from "lucide-react";
 
-function WeatherWidget({ info }) {
+const WeatherWidget = ({ info }) => {
+  const iconMap = {
+    humidity: Droplets,
+    wind: Wind,
+    pressure: Gauge,
+    sunrise: Sunrise,
+    sunset: Sunset,
+  };
+
+  if (info.title === "sun") {
+    return (
+        <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-2xl p-6 shadow-lg border border-orange-100">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <Sunrise className="w-5 h-5 text-orange-500" />
+                <span className="text-sm font-medium text-orange-600">Sunrise</span>
+              </div>
+              <div className="text-xl font-bold text-gray-800">
+                {info.data.sunriseTime}
+              </div>
+            </div>
+
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <Sunset className="w-5 h-5 text-yellow-500" />
+                <span className="text-sm font-medium text-yellow-600">Sunset</span>
+              </div>
+              <div className="text-xl font-bold text-gray-800">
+                {info.data.sunsetTime}
+              </div>
+            </div>
+          </div>
+        </div>
+    );
+  }
+
+  const Icon = iconMap[info.title.toLowerCase()] || AlertCircle;
+  const colorMap = {
+    humidity: "blue",
+    wind: "green",
+    pressure: "purple",
+  };
+  const color = colorMap[info.title.toLowerCase()] || "gray";
+
   return (
-    <div className=" bg-white bg-opacity-80  rounded-xl flex flex-col justify-center items-center">
-      {info.title !== "sun" ? (
-        <div className="w-full flex flex-col p-2 gap-2">
-          <div className="flex items-center text-gray-600 gap-2">
-            <img src={info.icon} alt={info.icon} className="w-4"/>
-            <h1>{info.title}</h1>
-          </div>
-          <p className="font-bold text-xl text-gray-600 text-center">{info.data} {info.unit}</p>
+      <div className={`bg-${color}-50 rounded-2xl p-6 shadow-lg border border-${color}-100`}>
+        <div className="flex items-center gap-3 mb-4">
+          <Icon className={`w-6 h-6 text-${color}-500`} />
+          <h3 className={`text-sm font-medium text-${color}-600 capitalize`}>
+            {info.title}
+          </h3>
         </div>
-      ) : (
-        <div className="flex justify-around w-full ">
-          <div className="flex flex-col items-center">
-            <div className="flex items-center text-gray-600 gap-2">
-              <img src={info.sunriseIcon} alt="" className="w-5"/>
-              <h1>Sunrise</h1>
-            </div>
-            <p className="font-bold text-lg text-gray-600">{info.data.sunriseTime} </p>
-          </div>
-          <div className="flex flex-col  items-center">
-            <div className="flex items-center text-gray-600 gap-2">
-              <img src={info.sunsetIcon} alt="" className="w-5"/>
-              <h1>Sunset</h1>
-            </div>
 
-            <p className="font-bold text-lg text-gray-600">{info.data.sunsetTime}</p>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-gray-800">
+            {info.data} {info.unit}
           </div>
         </div>
-      )}
-    </div>
+      </div>
   );
-}
+};
+
 
 export default WeatherWidget;
