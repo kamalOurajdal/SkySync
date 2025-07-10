@@ -12,8 +12,10 @@ import {Eye} from "lucide-react";
 
 const Map = () => {
   const [SearchValue, setSearchValue] = useState("");
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({lat: null, lng:null});
   const [weatherData, setWeatherData] = useState(null);
+  const [clickedLocation, setClickedLocation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearchChange = (value) => {
     setSearchValue(value);
@@ -23,32 +25,56 @@ const Map = () => {
     setLocation(value);
   };
 
+  // Fetch weather data when location changes
   useEffect(() => {
-    setWeatherData(null);
     const fetchWeather = async (lat, lng) => {
-      if (!!lat || !!lng) return;
-      await getWeatherData("weather", {
-        lat: lat,
-        lon: lng,
-        units: "metric",
-      })
-          .then(formatCurrentWeather)
-          .then((data) => setWeatherData(data.currentWeather));
+      if (!lat || !lng) return;
+
+      setIsLoading(true);
+      try {
+        const data = await getWeatherData("weather", {
+          lat: lat,
+          lon: lng,
+          units: "metric",
+        });
+        const formattedData = await formatCurrentWeather(data);
+        setWeatherData(formattedData.currentWeather);
+      } catch (error) {
+        console.error("Error fetching weather:", error);
+        setWeatherData(null);
+      } finally {
+        setIsLoading(false);
+      }
     };
-    if (location) {
+
+    if (location.lat && location.lng) {
       fetchWeather(location.lat, location.lng);
     }
-  }, [location]);
+  }, [location.lat, location.lng]);
 
-  function LocationMarker({ weatherData }) {
-    const map = useMapEvents({
+  function LocationMarker() {
+    useMapEvents({
       click(e) {
-        setLocation(e.latlng);
+        const newLocation = { lat: e.latlng.lat, lng: e.latlng.lng };
+        console.log("Map clicked at:", newLocation);
+
+        // Set both the clicked location for popup and trigger weather fetch
+        setClickedLocation(newLocation);
+        setLocation(newLocation);
       },
     });
 
-    return (!!location?.lng || !!location?.lat) || !!weatherData  && (
-        <Popup closeButton={false}  position={location}>
+    // Show popup only if we have both clicked location and weather data
+    if (!clickedLocation || !weatherData || isLoading) {
+      return null;
+    }
+
+    return (
+        <Popup
+            closeButton={false}
+            position={[clickedLocation.lat, clickedLocation.lng]}
+            onClose={() => setClickedLocation(null)}
+        >
           <div className="w-48 bg-white rounded-lg border-0 overflow-hidden">
               <h3 className="font-semibold text-lg text-center truncate border-b pb-1">
                 {weatherData.name}
@@ -116,7 +142,7 @@ const Map = () => {
                     url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                <LocationMarker weatherData={weatherData}/>
+                <LocationMarker />
               </MapContainer>
             </div>
           </div>
