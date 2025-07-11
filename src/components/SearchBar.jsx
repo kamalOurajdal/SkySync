@@ -57,7 +57,7 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
     setLoading(true);
     try {
       const response = await fetch(
-          `http://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=${USERNAME}`
+          `https://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=${USERNAME}`
       );
       const data = await response.json();
       const citySuggestions = data.geonames.map((city) => {
