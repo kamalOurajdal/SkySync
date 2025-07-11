@@ -92,7 +92,7 @@ export default function Navbar() {
                       <NavLink
                           key={id}
                           to={to}
-                          end
+                          end={false}
                           onClick={() => setIsMobileMenuOpen(false)}
                           className={({isActive}) =>
                               `flex items-center gap-4 p-3 rounded-xl transition-all ${
