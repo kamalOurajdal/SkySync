@@ -25,7 +25,7 @@ export default function Navbar() {
                   <NavLink
                       key={id}
                       to={to}
-                      end
+                      end={false}
                       className={({ isActive }) =>
                           `group flex flex-col items-center p-3 rounded-2xl transition-all ${
                               isActive

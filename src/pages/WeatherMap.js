@@ -99,7 +99,7 @@ const Map = () => {
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 rounded-2xl"
               >
                 <Link
-                    to={`/${location.lat}/${location.lng}`}>
+                    to={`/weather/${location.lat}/${location.lng}`}>
                   <div
                       className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative flex items-center justify-center gap-2 text-white">

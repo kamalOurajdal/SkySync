@@ -1,6 +1,6 @@
 import React, {useCallback, useState, useEffect, useRef} from "react";
-import {Loader2, Search, MapPin} from "lucide-react";
-import {USERNAME, WEATHER_API_KEY} from "../Constant";
+import {Search, MapPin} from "lucide-react";
+import {USERNAME} from "../Constant";
 
 const SearchBar = ({ onSearchChange, setLocation }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -122,7 +122,7 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
                   value={searchValue}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyPress}
-                  className="w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                  className="w-full pl-12 pr-4 py-3 lg:py-4 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
 
               {loading && searchValue.trim() && (
@@ -136,9 +136,9 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
 
           <button
               onClick={getCurrentLocation}
-              className="p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5"
+              className="p-3 lg:p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl shadow-lg"
           >
-            <MapPin className="w-6 h-6"/>
+            <MapPin className="size-4 lg:size-6"/>
           </button>
           {showSuggestions && searchValue && suggestions.length > 0 && (
               <div
