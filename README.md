@@ -82,6 +82,6 @@ npm start
 <div align="center">
 
 Crafted with ☕ and ❤️ by **Kamal Ourajdal**
-[LinkedIn](https://www.linkedin.com/in/kamal-ourajdal)
+[LinkedIn](https://www.linkedin.com/in/kamalourajdal)
 
 </div>

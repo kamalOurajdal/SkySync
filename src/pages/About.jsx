@@ -28,8 +28,8 @@ export default function WeatherAbout() {
     ];
 
     const tech = [
-        { id: 1, name: "React",          icon: <Code   className="w-8 h-8 text-blue-500" />,  color: "bg-blue-50",  version: "18.2" },
-        { id: 2, name: "Tailwind CSS",   icon: <Palette className="w-8 h-8 text-cyan-500" />, color: "bg-cyan-50",  version: "3.4" },
+        { id: 1, name: "React",          icon: <Code   className="w-8 h-8 text-blue-500" />,  color: "bg-blue-50",  version: "18.3" },
+        { id: 2, name: "Tailwind CSS",   icon: <Palette className="w-8 h-8 text-cyan-500" />, color: "bg-cyan-50",  version: "3.3" },
         { id: 3, name: "Leaflet",        icon: <Map    className="w-8 h-8 text-green-500" />, color: "bg-green-50", version: "1.9" },
     ];
 
