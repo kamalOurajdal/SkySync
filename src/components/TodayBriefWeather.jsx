@@ -8,12 +8,15 @@ import {
   Droplets,
   Eye,
 } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 const WeatherBriefCard = ({ currentWeather, isLoading = false }) => {
+  const { isDark } = useTheme();
+
   /* ───────────── skeleton  ───────────── */
   if (isLoading) {
     return (
-        <div className="bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 text-white rounded-3xl p-8 mb-6 animate-pulse">
+        <div className="bg-gradient-to-br from-light-primary via-light-secondary to-purple-600 dark:from-dark-primary dark:via-dark-secondary dark:to-purple-600 text-white rounded-3xl p-8 mb-6 animate-pulse transition-all duration-300">
           <div className="flex sm:block items-center justify-between gap-6">
             <div className="flex-1 space-y-4">
               <div className="h-14 bg-white/20 rounded-2xl w-48" />
@@ -71,10 +74,10 @@ const WeatherBriefCard = ({ currentWeather, isLoading = false }) => {
 
   /* ─────────────  UI  ───────────── */
   return (
-      <div className="relative bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 text-white rounded-3xl p-6 sm:p-8 shadow-xl mb-6 overflow-hidden">
+      <div className="relative bg-gradient-to-br from-light-primary via-light-secondary to-purple-600 dark:from-dark-primary dark:via-dark-secondary dark:to-purple-600 text-white rounded-3xl p-6 sm:p-8 shadow-xl hover:shadow-2xl mb-6 overflow-hidden transition-all duration-300 ease-in-out animate-scale-in">
         {/* soft background blobs */}
-        <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 -left-16 w-56 h-56 bg-purple-400/20 rounded-full blur-2xl" />
+        <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/10 rounded-full blur-3xl transition-all duration-300" />
+        <div className="absolute bottom-0 -left-16 w-56 h-56 bg-purple-400/20 rounded-full blur-2xl transition-all duration-300" />
 
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           {/* icon for phones goes first */}
@@ -82,7 +85,7 @@ const WeatherBriefCard = ({ currentWeather, isLoading = false }) => {
             <img
                 src={getIcon(icon)}
                 alt={main}
-                className="h-24 drop-shadow-xl"
+                className="h-24 drop-shadow-xl transition-transform duration-300 hover:scale-110"
             />
           </div>
 
@@ -99,7 +102,7 @@ const WeatherBriefCard = ({ currentWeather, isLoading = false }) => {
           </span>
 
             {/* location pill */}
-            <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
+            <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 hover:bg-white/30">
               <MapPin className="w-4 h-4 text-red-200" />
               {name}, {country}
             </div>
@@ -125,7 +128,7 @@ const WeatherBriefCard = ({ currentWeather, isLoading = false }) => {
             <img
                 src={getIcon(icon)}
                 alt={main}
-                className="h-32 drop-shadow-xl hover:scale-110 transition-transform"
+                className="h-32 drop-shadow-xl hover:scale-110 transition-transform duration-300"
             />
           </div>
 
@@ -146,7 +149,7 @@ const WeatherBriefCard = ({ currentWeather, isLoading = false }) => {
               {metrics.map((m, i) => (
                   <div
                       key={i}
-                      className="flex flex-col items-center bg-white/15 backdrop-blur-sm rounded-2xl py-3"
+                      className="flex flex-col items-center bg-white/15 backdrop-blur-sm rounded-2xl py-3 transition-all duration-300 hover:bg-white/25 hover:scale-105"
                   >
                     <m.icon className="w-5 h-5 mb-1 opacity-90" />
                     <span className="text-xs opacity-80">{m.label}</span>

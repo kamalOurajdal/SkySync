@@ -11,8 +11,11 @@ import {
     Thermometer,
     CloudRain
 } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 const TodayWeatherDetails = ({ currentWeather }) => {
+    const { isDark } = useTheme();
+    
     if (!currentWeather) return null;
 
     const {
@@ -98,17 +101,17 @@ const TodayWeatherDetails = ({ currentWeather }) => {
     const allWidgets = [...widgets, ...additionalWidgets];
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 animate-fade-in">
             {/* Section Header */}
             <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
+                <div className="p-2 bg-gradient-to-br from-light-primary to-light-secondary dark:from-dark-primary dark:to-dark-secondary rounded-lg transition-all duration-300">
                     <Gauge className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                    <h3 className="text-2xl font-bold text-gray-800">
+                    <h3 className="text-2xl font-bold text-light-text dark:text-dark-text transition-colors duration-300">
                         Weather Details
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-light-textSecondary dark:text-dark-textSecondary transition-colors duration-300">
                         Current atmospheric conditions
                     </p>
                 </div>
@@ -119,7 +122,7 @@ const TodayWeatherDetails = ({ currentWeather }) => {
                 {allWidgets.map((widget, index) => (
                     <div
                         key={index}
-                        className="group bg-white/95 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                        className="group bg-light-surface/95 dark:bg-dark-surface/95 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-light-border/30 dark:border-dark-border/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-scale-in"
                         style={{
                             animationDelay: `${index * 100}ms`,
                         }}
@@ -130,10 +133,10 @@ const TodayWeatherDetails = ({ currentWeather }) => {
                                 <widget.icon className="w-5 h-5 text-white" />
                             </div>
                             <div>
-                                <h4 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                                <h4 className="text-sm font-semibold text-light-text dark:text-dark-text uppercase tracking-wide transition-colors duration-300">
                                     {widget.title}
                                 </h4>
-                                <p className="text-xs text-gray-500">
+                                <p className="text-xs text-light-textSecondary dark:text-dark-textSecondary transition-colors duration-300">
                                     {widget.description}
                                 </p>
                             </div>
@@ -144,26 +147,26 @@ const TodayWeatherDetails = ({ currentWeather }) => {
                             <div className="space-y-3">
                                 <div className="flex items-center gap-2">
                                     <Sunrise className="w-4 h-4 text-orange-500" />
-                                    <span className="text-sm text-gray-600">Sunrise</span>
-                                    <span className="text-lg font-bold text-gray-800 ml-auto">
+                                    <span className="text-sm text-light-textSecondary dark:text-dark-textSecondary transition-colors duration-300">Sunrise</span>
+                                    <span className="text-lg font-bold text-light-text dark:text-dark-text ml-auto transition-colors duration-300">
                                         {widget.data.sunriseTime}
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Sunset className="w-4 h-4 text-orange-600" />
-                                    <span className="text-sm text-gray-600">Sunset</span>
-                                    <span className="text-lg font-bold text-gray-800 ml-auto">
+                                    <span className="text-sm text-light-textSecondary dark:text-dark-textSecondary transition-colors duration-300">Sunset</span>
+                                    <span className="text-lg font-bold text-light-text dark:text-dark-text ml-auto transition-colors duration-300">
                                         {widget.data.sunsetTime}
                                     </span>
                                 </div>
                             </div>
                         ) : (
                             <div className="flex items-baseline gap-1">
-                                <span className="text-3xl font-bold text-gray-800">
+                                <span className="text-3xl font-bold text-light-text dark:text-dark-text transition-colors duration-300">
                                     {widget.data}
                                 </span>
                                 {widget.unit && (
-                                    <span className="text-sm text-gray-500 font-medium">
+                                    <span className="text-sm text-light-textSecondary dark:text-dark-textSecondary font-medium transition-colors duration-300">
                                         {widget.unit}
                                     </span>
                                 )}
@@ -173,7 +176,7 @@ const TodayWeatherDetails = ({ currentWeather }) => {
                         {/* Progress indicator for certain metrics */}
                         {widget.title === "Humidity" && (
                             <div className="mt-4">
-                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                <div className="w-full bg-light-border dark:bg-dark-border rounded-full h-2 transition-colors duration-300">
                                     <div
                                         className="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full transition-all duration-500"
                                         style={{ width: `${Math.min(widget.data, 100)}%` }}
@@ -184,7 +187,7 @@ const TodayWeatherDetails = ({ currentWeather }) => {
 
                         {widget.title === "UV Index" && widget.data && (
                             <div className="mt-4">
-                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                <div className="w-full bg-light-border dark:bg-dark-border rounded-full h-2 transition-colors duration-300">
                                     <div
                                         className={`h-2 rounded-full transition-all duration-500 ${
                                             widget.data <= 2 ? 'bg-green-500' :
@@ -197,9 +200,6 @@ const TodayWeatherDetails = ({ currentWeather }) => {
                                 </div>
                             </div>
                         )}
-
-                        {/* Hover effect overlay */}
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 transition-all duration-200 pointer-events-none"></div>
                     </div>
                 ))}
             </div>

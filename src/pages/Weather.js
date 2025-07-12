@@ -10,11 +10,13 @@ import getFormattedWeatherData, {
 import loading_svg from "../assets/icons/weather_icon/loading.svg";
 import { useParams } from "react-router-dom";
 import { Sunset, Loader2, AlertCircle } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 function Weather() {
   const [weather, setWeather] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { isDark } = useTheme();
 
   const { lat, lon } = useParams();
 
@@ -58,16 +60,16 @@ function Weather() {
 
   // Loading Component
   const LoadingComponent = () => (
-      <div className="flex flex-col justify-center items-center h-full w-full min-h-[60vh] space-y-4">
+      <div className="flex flex-col justify-center items-center h-full w-full min-h-[60vh] space-y-4 animate-fade-in">
         <div className="relative">
           <img src={loading_svg} alt="Loading" className="w-20 h-20 animate-spin" />
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-light-primary/20 to-light-secondary/20 dark:from-dark-primary/20 dark:to-dark-secondary/20 rounded-full blur-xl transition-all duration-300"></div>
         </div>
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-gray-700 mb-1">
+          <h3 className="text-lg font-semibold text-light-text dark:text-dark-text mb-1 transition-colors duration-300">
             Loading Weather Data
           </h3>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-light-textSecondary dark:text-dark-textSecondary transition-colors duration-300">
             Fetching the latest weather information...
           </p>
         </div>
@@ -76,20 +78,20 @@ function Weather() {
 
   // Error Component
   const ErrorComponent = () => (
-      <div className="flex flex-col justify-center items-center h-full w-full min-h-[60vh] space-y-4">
-        <div className="p-4 bg-red-100 rounded-full">
+      <div className="flex flex-col justify-center items-center h-full w-full min-h-[60vh] space-y-4 animate-fade-in">
+        <div className="p-4 bg-red-100 dark:bg-red-900/20 rounded-full transition-colors duration-300">
           <AlertCircle className="w-12 h-12 text-red-500" />
         </div>
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
+          <h3 className="text-lg font-semibold text-light-text dark:text-dark-text mb-2 transition-colors duration-300">
             Unable to Load Weather Data
           </h3>
-          <p className="text-sm text-gray-600 mb-4">
+          <p className="text-sm text-light-textSecondary dark:text-dark-textSecondary mb-4 transition-colors duration-300">
             {error}
           </p>
           <button
               onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              className="px-4 py-2 bg-light-primary dark:bg-dark-primary text-white rounded-lg hover:bg-light-secondary dark:hover:bg-dark-secondary transition-all duration-300 hover:scale-105 shadow-lg"
           >
             Try Again
           </button>
@@ -104,7 +106,7 @@ function Weather() {
     const sunsetTime = formatToLocalTime(sunset, timezone / 60).split("|")[1];
 
     return (
-        <div className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 text-white rounded-3xl p-6 shadow-md mb-6">
+        <div className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 text-white rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 mb-6 animate-slide-up">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-white/20 backdrop-blur-sm rounded-2xl">
               <Sunset className="w-8 h-8" />
@@ -123,8 +125,8 @@ function Weather() {
   };
 
   return (
-      <div className="min-h-screen">
-        <div className="sticky top-0 z-20 py-4 mb-2">
+      <div className="min-h-screen transition-colors duration-300 ease-in-out">
+        <div className="sticky top-0 z-20 py-4 mb-2 bg-light-background/80 dark:bg-dark-background/80 backdrop-blur-sm transition-colors duration-300">
           {/* Search Bar */}
           <SearchBar
               onSearchChange={handleSearchChange}
@@ -141,7 +143,7 @@ function Weather() {
 
           {/* Main Content */}
           {!loading && !error && (
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6 animate-fade-in">
                 <div className=" flex-grow overflow-auto space-y-7">
                   {/* Today's Brief Weather */}
                   <div className="w-full">

@@ -24,23 +24,25 @@
 | 🎯 **Geo‑precise**     | GPS‑level targeting & interactive map |
 | 📈 **7‑Day forecast**  | Hourly overview |
 | 💎 **Modern UI**       | Glassmorphism, smooth animations, fully responsive |
+| 🌙 **Dark Mode**       | Automatic theme detection & smooth transitions |
 
 ---
 
 ## 📸 Screenshots
 
 
-![dashboard](docs/screenshots/weather_1.png) 
-![img_1.png](docs/screenshots/weather_search.png)  
-![dashboard](docs/screenshots/weather_2.png) 
-![map](docs/screenshots/map.png)             
+![dashboard](docs/screenshots/weather_dark.png) 
+![img_1.png](docs/screenshots/weather_light.png) 
+![img_1.png](docs/screenshots/weather_dark_search.png)
+![img_1.png](docs/screenshots/weather_details.png)
+![map](docs/screenshots/map_dark.png)          
 ![img_1.png](docs/screenshots/about.png)     
 
 
 ## 🔧 Technologies
 
 - **React 18.3** – UI & routing
-- **Tailwind CSS 3.x** – Utility‑first styling
+- **Tailwind CSS 3.x** – Utility‑first styling with dark mode support
 - **Leaflet 1.9** – Interactive OpenStreetMap layer
 - **OpenWeather API** – Current & forecasted weather
 - **GeoNames** – Worldwide geocoding / city search
