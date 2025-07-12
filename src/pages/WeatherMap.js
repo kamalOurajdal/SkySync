@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import { Link } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Popup, useMapEvents, ZoomControl } from "react-leaflet";
+import { MapContainer, TileLayer, Popup, useMapEvents } from "react-leaflet";
 import {
   formatCurrentWeather,
   getIcon,
@@ -118,7 +118,7 @@ const Map = () => {
 
   return (
       <div className="h-screen flex flex-col gap-4 bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="top-20 right-0 left-0 z-20 py-4 absolute">
+        <div className="sticky top-0 z-20 py-4">
           <SearchBar
               onSearchChange={handleSearchChange}
               setLocation={handleLocation}
@@ -126,7 +126,7 @@ const Map = () => {
         </div>
 
         {/* Main content area */}
-        <div className="flex flex-1 overflow-hidden relative z-10 rounded-xl mx-4 mt-4">
+        <div className="flex flex-1 overflow-hidden relative z-10 rounded-xl mx-4">
           {/* Map container - responsive */}
           <div className="flex-col transition-all duration-300 flex flex-1 rounded-xl">
             <div className="flex-1 relative">
@@ -134,15 +134,12 @@ const Map = () => {
                   center={[31.61, -7.61]}
                   zoom={5}
                   scrollWheelZoom
-                  zoomControl={false} // Disable default zoom control
                   className="w-full h-full overflow-hidden"
               >
                 <TileLayer
                     url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                {/* Add zoom control in bottom right position */}
-                <ZoomControl position="bottomright" />
                 <LocationMarker />
               </MapContainer>
             </div>
