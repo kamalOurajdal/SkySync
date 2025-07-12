@@ -122,7 +122,7 @@ const SearchBar = ({ onSearchChange, setLocation }) => {
                   value={searchValue}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyPress}
-                  className="w-full pl-12 pr-4 py-3 lg:py-4 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                  className="w-full pl-12 pr-4 py-3 lg:py-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
 
               {loading && searchValue.trim() && (

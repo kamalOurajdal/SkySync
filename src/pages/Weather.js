@@ -131,7 +131,7 @@ function Weather() {
               setLocation={handleLocation}
           />
         </div>
-        <div className="container mx-auto px-4 pt-6 pb-4 max-w-7xl">
+        <div className="container mx-auto px-4 pt-4 pb-4 max-w-7xl">
 
           {/* Loading State */}
           {loading && <LoadingComponent/>}
